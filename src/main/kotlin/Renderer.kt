@@ -94,8 +94,10 @@ object Renderer : JPanel() {
 
         // Draw the ennemies
         entities.forEach { it.draw(hero.posX, hero.posY, g) }
+        entities.forEach { it.update() }
         // Draw the hero
         hero.draw(g)
+
 
         // Move the Hero
         if(upPressed && leftPressed) {

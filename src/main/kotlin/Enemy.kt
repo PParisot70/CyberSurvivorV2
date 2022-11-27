@@ -2,29 +2,25 @@ import java.awt.Color
 import java.awt.Graphics2D
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
-
-
 import Renderer.WINDOW_HEIGHT
 import Renderer.WINDOW_WIDTH
 import Renderer.hero
 
-
-class Enemy @JvmOverloads constructor(var x: Int = 0, var y: Int = 0, initialVelocity: java.util.Vector? = java.util.Vector()) {
+class Enemy @JvmOverloads constructor(var x: Int = 0, var y: Int = 0, initialVelocity: Vector? = Vector()) {
     var vel // velocity
             : Vector? = null
     var acc // acceleration
             : Vector
-    var maxVel = 20.0
-    var maxForce = 1.5
+    var maxVel = 4.0
+    var maxForce = 0.5
     var mass = 1.0
     var size = 20
     var pathLength = 50
     var path = LinkedList<IntArray>()
     var color = Color.BLACK
     var defaultPredictionFactor = 5
-    var target: Hero = hero
-    var behavior = Behavior.Pursue
-
+    var target: Hero? = hero
+    var comportement = Behavior.Seek
     /**
      * Constructs a new `Enemy` at the given postion and velocity
      * with the acceleration set to 0
@@ -47,13 +43,6 @@ class Enemy @JvmOverloads constructor(var x: Int = 0, var y: Int = 0, initialVel
      * set to 0
      *
      */
-
-    fun draw(heroX: Int, heroY: Int, g: Graphics2D) {
-        g.color = color
-        g.fillOval(x - heroX + WINDOW_WIDTH / 2 - size / 2, y - heroY + WINDOW_HEIGHT / 2 - size / 2, size, size)
-        g.color = Color.black
-    }
-
     init {
         vel = initialVelocity?.let { Vector(it) } ?: Vector(0.0, 0.0)
         acc = Vector(0.0, 0.0)
@@ -116,9 +105,9 @@ class Enemy @JvmOverloads constructor(var x: Int = 0, var y: Int = 0, initialVel
      * @param x2 the maximum x position to the vehicle
      * @param y2 the maximum x position to the vehicle
      */
-    fun Update(x1: Int, x2: Int, y1: Int, y2: Int) {
-        if (target != null || behavior == Behavior.Wander) {
-            when (behavior) {
+    fun update() {
+        if (target != null ) {
+            when (comportement) {
                 Behavior.Seek -> Seek(target!!.posX.toDouble(), target!!.posY.toDouble())
                 Behavior.Flee -> Flee(target!!.posX.toDouble(), target!!.posY.toDouble())
                 Behavior.Pursue -> Pursue(target)
@@ -131,6 +120,9 @@ class Enemy @JvmOverloads constructor(var x: Int = 0, var y: Int = 0, initialVel
         x += vel!!.getXMag().toInt()
         y -= vel!!.getYMag().toInt()
         acc.setMag(0.0)
+        repulsion()
+
+
 
 
         // Add the current position to the path list
@@ -172,7 +164,7 @@ class Enemy @JvmOverloads constructor(var x: Int = 0, var y: Int = 0, initialVel
         ApplyForce(GetSteeringForce(x, y, true))
     }
 
-    fun GetPredictedPosition(v: Hero, predictionFactor: Int): IntArray {
+    fun GetPredictedPosition(v: Hero?, predictionFactor: Int): IntArray {
         return intArrayOf(
             v!!.posX + (v.vel!!.getXMag() * predictionFactor).toInt(),
             v.posY - (v.vel!!.getYMag() * predictionFactor).toInt()
@@ -180,28 +172,43 @@ class Enemy @JvmOverloads constructor(var x: Int = 0, var y: Int = 0, initialVel
     }
 
     @JvmOverloads
-    fun Pursue(v: Hero, predictionFactor: Int = defaultPredictionFactor) {
+    fun Pursue(v: Hero?, predictionFactor: Int = defaultPredictionFactor) {
         val pos = GetPredictedPosition(v, predictionFactor)
         Seek(pos[0].toDouble(), pos[1].toDouble())
     }
 
     @JvmOverloads
-    fun Evade(v: Hero, predictionFactor: Int = defaultPredictionFactor) {
+    fun Evade(v: Hero?, predictionFactor: Int = defaultPredictionFactor) {
         val pos = GetPredictedPosition(v, predictionFactor)
         Flee(pos[0].toDouble(), pos[1].toDouble())
     }
 
+    fun draw(heroX: Int, heroY: Int, g: Graphics2D) {
+        g.color = color
+        g.fillOval(x - heroX + WINDOW_WIDTH / 2 - size / 2, y - heroY + WINDOW_HEIGHT / 2 - size / 2, size, size)
+        g.drawString(""+x+"  "+y+"" , x - heroX + WINDOW_WIDTH / 2 - size / 2 , y - heroY + WINDOW_HEIGHT / 2 - size / 2 - 4)
+    }
 
+    fun repulsion(){
+        color = Color.black
+        var filtre = Renderer.entities.filter{it != this}
+        filtre.forEach{
+      if (CheckCollision(it)){
+          this.Flee((it.x).toDouble() , (it.y).toDouble())
+      }
+        }
+    }
+
+
+    fun CheckCollision(v2: Enemy): Boolean {
+        return Math.pow((x - v2.x).toDouble(), 2.0) + Math.pow((y - v2.y).toDouble(), 2.0) < Math.pow((v2.size + size).toDouble(), 2.0)
+    }
     companion object {
         private fun CalculateDistance(x1: Double, y1: Double, x2: Double, y2: Double): Double {
             return Math.sqrt(Math.pow(x1 - x2, 2.0) + Math.pow(y1 - y2, 2.0))
         }
 
-        fun CheckCollision(e: Enemy, h : Hero): Boolean {
-            return Math.pow((e.x - h.posX).toDouble(), 2.0) + Math.pow(
-                (e.y - h.posY).toDouble(),
-                2.0
-            ) < Math.pow((h.size + e.size).toDouble(), 2.0)
-        }
+
     }
 }
+
