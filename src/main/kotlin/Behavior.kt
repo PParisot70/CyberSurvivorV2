@@ -1,3 +1,3 @@
 enum class Behavior {
-    Wander, Seek, Flee, Pursue, Evade
+    Seek, Flee, Pursue, Evade
 }
