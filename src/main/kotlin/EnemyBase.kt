@@ -1,7 +1,6 @@
 import java.awt.Color
 import java.awt.Graphics2D
 import java.util.*
-import java.util.concurrent.ThreadLocalRandom
 import Renderer.WINDOW_HEIGHT
 import Renderer.WINDOW_WIDTH
 import Renderer.hero
@@ -11,38 +10,17 @@ class Enemy @JvmOverloads constructor(var x: Int = 0, var y: Int = 0, initialVel
             : Vector? = null
     var acc // acceleration
             : Vector
-    var maxVel = 4.0
+    var maxVel = 4.0 * Level.velmultiply
     var maxForce = 0.5
     var mass = 1.0
     var size = 20
     var pathLength = 50
     var path = LinkedList<IntArray>()
-    var color = Color.BLACK
+    var color = Color.RED
     var defaultPredictionFactor = 5
     var target: Hero? = hero
     var comportement = Behavior.Seek
-    /**
-     * Constructs a new `Enemy` at the given postion and velocity
-     * with the acceleration set to 0
-     *
-     * @param x               the x coordinates
-     * @param y               the y coordinates
-     * @param initialVelocity the initial velocity of the vehicle
-     *
-     * @see Vector
-     */
-    /**
-     * Constructs a new `Enemy` at the given postion with the velocity and
-     * acceleration set to 0
-     *
-     * @param x the x coordinates
-     * @param y the y coordinates
-     */
-    /**
-     * Constructs a new `Enemy` at (0, 0) with the velocity and acceleration
-     * set to 0
-     *
-     */
+
     init {
         vel = initialVelocity?.let { Vector(it) } ?: Vector(0.0, 0.0)
         acc = Vector(0.0, 0.0)
@@ -51,41 +29,6 @@ class Enemy @JvmOverloads constructor(var x: Int = 0, var y: Int = 0, initialVel
         }
     }
 
-    /***
-     * Sets a random speed and position to the vehicle object
-     *
-     * @param v  the target object
-     * @param x1 the minimum x position to the vehicle
-     * @param y1 the minimum y position to the vehicle
-     * @param x2 the maximum x position to the vehicle
-     * @param y2 the maximum x position to the vehicle
-     */
-    fun Randomize(x1: Int, y1: Int, x2: Int, y2: Int) {
-        RandomizePosition(x1, y1, x2, y2)
-        RandomizeVelocity()
-    }
-
-    /***
-     * Sets a random position to the vehicle object
-     *
-     * @param v  the target object
-     * @param x1 the minimum x position to the vehicle
-     * @param y1 the minimum y position to the vehicle
-     * @param x2 the maximum x position to the vehicle
-     * @param y2 the maximum x position to the vehicle
-     */
-    fun RandomizePosition(x1: Int, y1: Int, x2: Int, y2: Int) {
-        x = ThreadLocalRandom.current().nextInt(x1, x2)
-        y = ThreadLocalRandom.current().nextInt(y1, y2)
-    }
-
-    /**
-     * Sets a random Velociy to the vehicle object
-     */
-    fun RandomizeVelocity() {
-        vel!!.setMag(ThreadLocalRandom.current().nextInt((maxVel * 0.1).toInt(), maxVel.toInt() + 1).toDouble())
-        vel!!.angleInDegrees = ThreadLocalRandom.current().nextInt(1, 360 + 1).toDouble()
-    }
 
     fun ApplyForce(forceVector: Vector) {
         var forceVector = forceVector
@@ -96,15 +39,7 @@ class Enemy @JvmOverloads constructor(var x: Int = 0, var y: Int = 0, initialVel
         acc.add(forceVector)
     }
 
-    /***
-     * Updates the position of the vehicle and limits the position to the given
-     * boundary
-     *
-     * @param x1 the minimum x position to the vehicle
-     * @param y1 the minimum y position to the vehicle
-     * @param x2 the maximum x position to the vehicle
-     * @param y2 the maximum x position to the vehicle
-     */
+
     fun update() {
         if (target != null ) {
             when (comportement) {
@@ -185,12 +120,11 @@ class Enemy @JvmOverloads constructor(var x: Int = 0, var y: Int = 0, initialVel
 
     fun draw(heroX: Int, heroY: Int, g: Graphics2D) {
         g.color = color
-        g.fillOval(x - heroX + WINDOW_WIDTH / 2 - size / 2, y - heroY + WINDOW_HEIGHT / 2 - size / 2, size, size)
-        g.drawString(""+x+"  "+y+"" , x - heroX + WINDOW_WIDTH / 2 - size / 2 , y - heroY + WINDOW_HEIGHT / 2 - size / 2 - 4)
+        g.fillOval(x - heroX + WINDOW_WIDTH / 2 - (size+10) / 2, y - heroY + WINDOW_HEIGHT / 2 - (size+10) / 2,(size+10), (size+10))
+        g.drawString("$x  $y", x - heroX + WINDOW_WIDTH / 2 - size / 2 , y - heroY + WINDOW_HEIGHT / 2 - size / 2 - 4)
     }
 
     fun repulsion(){
-        color = Color.black
         var filtre = Renderer.entities.filter{it != this}
         filtre.forEach{
       if (CheckCollision(it)){

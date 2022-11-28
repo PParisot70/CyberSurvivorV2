@@ -2,23 +2,28 @@ import java.awt.*
 import java.awt.event.ActionEvent
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
+import java.time.Duration
+import java.time.Instant
 import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.SwingUtilities
 import javax.swing.Timer
+
 
 object Renderer : JPanel() {
     const val FRAMES_PER_SEC = 60
     const val FRAME_IN_MSEC = 1000 / FRAMES_PER_SEC
     const val WINDOW_WIDTH = 1080
     const val WINDOW_HEIGHT = 720
-
     var upPressed = false
     var downPressed = false
     var leftPressed = false
     var rightPressed = false
     val entities = mutableListOf<Enemy>()
+    val xps = mutableListOf<Experience>()
     val hero = Hero(0, 0, 70)
+    var time = Instant.now()
+
 
     init {
         preferredSize = Dimension(WINDOW_WIDTH, WINDOW_HEIGHT)
@@ -26,9 +31,10 @@ object Renderer : JPanel() {
     }
 
     fun initGame() {
+        time = Instant.now()
         createEnnemies()
+        createExperiences()
         this.entities.addAll(entities)
-
         SwingUtilities.invokeLater {
             val f = JFrame()
             with (f) {
@@ -41,8 +47,12 @@ object Renderer : JPanel() {
                 isVisible = true
             }
 
-            val stepTimer = Timer(FRAME_IN_MSEC) { e: ActionEvent? -> stepGame() }
+            var stepTimer = Timer(FRAME_IN_MSEC) { e: ActionEvent? -> stepGame() }
             stepTimer.start()
+
+
+
+
 
             // Set up key event handler
             f.addKeyListener(object : KeyAdapter() {
@@ -67,24 +77,36 @@ object Renderer : JPanel() {
         }
     }
 
+    private fun createExperiences(){
+        this.xps.add(Experience(100, 100))
+        this.xps.add(Experience(200, 200))
+        this.xps.add(Experience(300, 300))
+        this.xps.add(Experience(400, 400))
+        this.xps.add(Experience(500, 500))
+        this.xps.add(Experience(600, 600))
+        this.xps.add(Experience(700, 700))
+        this.xps.add(Experience(800, 800))
+        this.xps.add(Experience(900, 900))
+
+
+    }
+
+
     private fun createEnnemies() {
-        val entities = listOf(
-            Enemy(100, 100),
-            Enemy(200, 200),
-            Enemy(300, 300),
-            Enemy(400, 400),
-            Enemy(500, 500),
-            Enemy(600, 600),
-            Enemy(700, 700),
-            Enemy(800, 800),
-            Enemy(900, 900),
-            Enemy(1000, 1000)
-        )
-        this.entities.addAll(entities)
+        for (i in 1..Level.nbenemy) {
+           this.entities.add(EnemyFactory.createEnemy())
+        }
     }
 
     private fun stepGame() {
         repaint()
+        var lvl = (Duration.between(time, Instant.now()).seconds / 30).toInt()+1
+        Level.levelChange(lvl)
+        if (entities.size < Level.nbenemy){
+            for (i in 1..(Level.nbenemy -  entities.size)) {
+                this.entities.add(EnemyFactory.createEnemy())
+            }
+        }
     }
 
     override fun paint(gg: Graphics) {
@@ -95,8 +117,12 @@ object Renderer : JPanel() {
         // Draw the ennemies
         entities.forEach { it.draw(hero.posX, hero.posY, g) }
         entities.forEach { it.update() }
+        xps.forEach{it.draw(hero.posX, hero.posY, g)}
+        xps.forEach{it.update()}
         // Draw the hero
         hero.draw(g)
+        hero.magnet()
+        GUI.draw(g)
 
 
         // Move the Hero
@@ -130,6 +156,7 @@ object Renderer : JPanel() {
 
         // Check if the hero is in collision with an enemy
         entities.removeAll { hero.isColliding(it) }
+        xps.removeAll {hero.isCollidingxp(it)}
     }
 
 

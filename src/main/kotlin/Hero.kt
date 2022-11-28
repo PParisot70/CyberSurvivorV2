@@ -4,6 +4,7 @@ import java.util.*
 import java.util.concurrent.ThreadLocalRandom
 import Renderer.WINDOW_HEIGHT
 import Renderer.WINDOW_WIDTH
+import Renderer.xps
 
 class Hero @JvmOverloads constructor(var posX: Int, var posY: Int, var size: Int, initialVelocity: Vector? = Vector()) {
     var vel // velocity
@@ -13,12 +14,11 @@ class Hero @JvmOverloads constructor(var posX: Int, var posY: Int, var size: Int
     var maxVel = 20.0
     var maxForce = 1.5
     var mass = 1.0
-    var pathLength = 50
-    var path = LinkedList<IntArray>()
     val speed = 10 // Max distance per tick
-
-
-
+    var exp = 0
+    var level = 0
+    var expnextLevel = 5
+    var magnetsize = 200
 
 
     init {
@@ -41,30 +41,6 @@ class Hero @JvmOverloads constructor(var posX: Int, var posY: Int, var size: Int
         acc.add(forceVector)
     }
 
-    fun Update(x1: Int, x2: Int, y1: Int, y2: Int) {
-        vel!!.add(acc)
-        if (vel!!.getMag() > maxVel) vel!!.setMag(maxVel)
-        posX += vel!!.getXMag().toInt()
-        posY -= vel!!.getYMag().toInt()
-        acc.setMag(0.0)
-
-
-
-        // Add the current position to the path list
-        if (path.size >= pathLength) {
-            path.poll()
-        }
-        if (!path.isEmpty()
-            && (Math.abs(posX - path.last[0]) > Math.abs(vel!!.getXMag())
-                    || Math.abs(posY - path.last[1]) > Math.abs(vel!!.getYMag()))
-        ) {
-            // Add [-1, -1] to indicate the end of the previous path line and start a new
-            // line
-            path.poll()
-            path.add(intArrayOf(-1, -1))
-        }
-        path.add(intArrayOf(posX, posY))
-    }
 
 
 
@@ -80,18 +56,11 @@ class Hero @JvmOverloads constructor(var posX: Int, var posY: Int, var size: Int
     }
 
 
-
     companion object {
         private fun CalculateDistance(x1: Double, y1: Double, x2: Double, y2: Double): Double {
             return Math.sqrt(Math.pow(x1 - x2, 2.0) + Math.pow(y1 - y2, 2.0))
         }
 
-        fun CheckCollision(v1: Enemy, v2: Enemy): Boolean {
-            return Math.pow((v1.x - v2.x).toDouble(), 2.0) + Math.pow(
-                (v1.y - v2.y).toDouble(),
-                2.0
-            ) < Math.pow((v2.size + v1.size).toDouble(), 2.0)
-        }
     }
 
 
@@ -106,6 +75,8 @@ class Hero @JvmOverloads constructor(var posX: Int, var posY: Int, var size: Int
         g.fillOval( centerX - 10, centerY - 10, 20, 20)
         g.color = Color.red
         g.fillOval( centerX - 5, centerY - 5, 10, 10)
+        g.color = Color.black
+        g.drawString("$exp", 25 , 25  )
     }
 
     fun isColliding(e: Enemy): Boolean {
@@ -113,6 +84,17 @@ class Hero @JvmOverloads constructor(var posX: Int, var posY: Int, var size: Int
         val distance = Math.sqrt(Math.pow((posX - e.x).toDouble(), 2.0) + Math.pow((posY - e.y).toDouble(), 2.0))
         // If the distance is less than the sum of the radius, the hero is colliding with the enemy
         return distance < (size / 2 + e.size / 2)
+    }
+
+    fun isCollidingxp(e: Experience): Boolean {
+        // Computes the distance between the hero and the enemy
+        val distance = Math.sqrt(Math.pow((posX - e.x).toDouble(), 2.0) + Math.pow((posY - e.y).toDouble(), 2.0))
+        // If the distance is less than the sum of the radius, the hero is colliding with the enemy
+        if (distance < (size / 2 + e.size / 2)){
+            getXp(e)
+            return true
+        }
+        return false
     }
 
     fun moveUp() {
@@ -152,5 +134,31 @@ class Hero @JvmOverloads constructor(var posX: Int, var posY: Int, var size: Int
         posX += speedX.toInt()
         posY += speedY.toInt()
     }
+
+
+    fun getXp(xp : Experience){
+        exp += xp.amount
+        if (exp >= expnextLevel){
+            exp -= expnextLevel
+            LevelUp()
+        }
+    }
+
+    fun magnet(){
+        xps.forEach() {
+            var dis = Math.sqrt(Math.pow((posX - it.x).toDouble(), 2.0) + Math.pow((posY - it.y).toDouble(), 2.0))
+            if (dis < magnetsize)
+            {
+                it.comportement = Behavior.Pursue
+            }
+            }
+        }
+
+
+    fun LevelUp(){
+
+    }
+
+
 }
 

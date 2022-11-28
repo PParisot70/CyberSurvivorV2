@@ -55,9 +55,7 @@ class Vector {
         setMag(CalculateMag(xMag, yMag))
     }
 
-    // #region setters
-    // #endregion
-    // #region getters
+
     var angleInDegrees: Double
         get() = Math.toDegrees(angle)
         set(angle) {
