@@ -1,13 +1,4 @@
-import java.awt.*
-import java.awt.event.ActionEvent
-import java.awt.event.KeyAdapter
-import java.awt.event.KeyEvent
-import javax.swing.JFrame
-import javax.swing.JPanel
-import javax.swing.SwingUtilities
-import javax.swing.Timer
-
-object Level{
+object LevelTimer{
     var niveau : Int = 1
     var nbenemy : Int = 10
     var pecentofbulk : Double = 0.0

@@ -5,20 +5,22 @@ import java.util.concurrent.ThreadLocalRandom
 import Renderer.WINDOW_HEIGHT
 import Renderer.WINDOW_WIDTH
 import Renderer.xps
+import Spell.Spell
+import Tile
 
-class Hero @JvmOverloads constructor(var posX: Int, var posY: Int, var size: Int, initialVelocity: Vector? = Vector()) {
+class Hero( posX: Int, posY: Int , size :Int , initialVelocity: Vector? = Vector()) : Entity(posX, posY , size ){
     var vel // velocity
             : Vector? = null
     var acc // acceleration
             : Vector
-    var maxVel = 20.0
-    var maxForce = 1.5
-    var mass = 1.0
-    val speed = 10 // Max distance per tick
+    var maxVel = 5.0
+    // Max distance per tick
     var exp = 0
     var level = 0
     var expnextLevel = 5
     var magnetsize = 200
+    var spells: MutableList<Spell> = mutableListOf()
+    var health = 10
 
 
     init {
@@ -31,40 +33,7 @@ class Hero @JvmOverloads constructor(var posX: Int, var posY: Int, var size: Int
 
 
 
-
-    fun ApplyForce(forceVector: Vector) {
-        var forceVector = forceVector
-        forceVector = Vector(forceVector).divide(mass)
-        if (forceVector.getMag() > maxForce) {
-            forceVector.setMag(maxForce)
-        }
-        acc.add(forceVector)
-    }
-
-
-
-
-    fun GetSteeringForce(x: Double, y: Double): Vector {
-        var desiredMag = CalculateDistance(this.posX.toDouble(), this.posY.toDouble(), x, y)
-        if (desiredMag > maxVel) {
-            desiredMag = maxVel
-        }
-        val desiredAngle = Math.atan2(this.posY - y, x - this.posX)
-        val desiredVel = Vector(desiredMag, desiredAngle, true)
-
-        return Vector.Subtract(desiredVel, vel!!)
-    }
-
-
-    companion object {
-        private fun CalculateDistance(x1: Double, y1: Double, x2: Double, y2: Double): Double {
-            return Math.sqrt(Math.pow(x1 - x2, 2.0) + Math.pow(y1 - y2, 2.0))
-        }
-
-    }
-
-
-    fun draw(g: Graphics2D) {
+   override fun draw(g: Graphics2D) {
         val centerX = WINDOW_WIDTH / 2
         val centerY = WINDOW_HEIGHT / 2
         // Draw the hero always in the center of the screen
@@ -79,10 +48,16 @@ class Hero @JvmOverloads constructor(var posX: Int, var posY: Int, var size: Int
         g.drawString("$exp", 25 , 25  )
     }
 
+    override fun step() {
+        spells.forEach { it.step() }
+        println("ici")
+    }
+
     fun isColliding(e: Enemy): Boolean {
         // Computes the distance between the hero and the enemy
-        val distance = Math.sqrt(Math.pow((posX - e.x).toDouble(), 2.0) + Math.pow((posY - e.y).toDouble(), 2.0))
+        val distance = Math.sqrt(Math.pow((posX - e.posX).toDouble(), 2.0) + Math.pow((posY - e.posY).toDouble(), 2.0))
         // If the distance is less than the sum of the radius, the hero is colliding with the enemy
+        if (distance < (size / 2 + e.size / 2)){ health -= 1}
         return distance < (size / 2 + e.size / 2)
     }
 
@@ -97,43 +72,16 @@ class Hero @JvmOverloads constructor(var posX: Int, var posY: Int, var size: Int
         return false
     }
 
-    fun moveUp() {
-        ApplyForce(GetSteeringForce(10.0, 0.0))
-        posY -= speed
+    fun distanceToTile(t: Tile): Boolean {
+        // Computes the distance between the hero and the enemy
+        val distance = Math.sqrt(Math.pow((posX - t.x).toDouble(), 2.0) + Math.pow((posY - t.y).toDouble(), 2.0))
+        // If the distance is less than the sum of the radius, the hero is colliding with the enemy
+        if (distance > 1000){
+            return true
+        }
+        return false
     }
-    fun moveDown() {
-        posY += speed
-    }
-    fun moveLeft() {
-        posX -= speed
-    }
-    fun moveRight() {
-        posX += speed
-    }
-    fun moveUpLeft() {
-        val speedX = speed * Math.cos(Math.PI / 4)
-        val speedY = speed * Math.sin(Math.PI / 4)
-        posX -= speedX.toInt()
-        posY -= speedY.toInt()
-    }
-    fun moveUpRight() {
-        val speedX = speed * Math.cos(Math.PI / 4)
-        val speedY = speed * Math.sin(Math.PI / 4)
-        posX += speedX.toInt()
-        posY -= speedY.toInt()
-    }
-    fun moveDownLeft() {
-        val speedX = speed * Math.cos(Math.PI / 4)
-        val speedY = speed * Math.sin(Math.PI / 4)
-        posX -= speedX.toInt()
-        posY += speedY.toInt()
-    }
-    fun moveDownRight() {
-        val speedX = speed * Math.cos(Math.PI / 4)
-        val speedY = speed * Math.sin(Math.PI / 4)
-        posX += speedX.toInt()
-        posY += speedY.toInt()
-    }
+
 
 
     fun getXp(xp : Experience){
@@ -142,6 +90,7 @@ class Hero @JvmOverloads constructor(var posX: Int, var posY: Int, var size: Int
             exp -= expnextLevel
             LevelUp()
         }
+        println("$exp")
     }
 
     fun magnet(){

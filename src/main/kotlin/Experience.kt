@@ -5,7 +5,7 @@ import Renderer.WINDOW_HEIGHT
 import Renderer.WINDOW_WIDTH
 import Renderer.hero
 
-class Experience @JvmOverloads constructor(var x: Int = 0, var y: Int = 0, initialVelocity: Vector? = Vector()) {
+class Experience constructor(var x: Int = 0, var y: Int = 0, var amount : Int, initialVelocity: Vector? = Vector()) {
     var vel // velocity
             : Vector? = null
     var acc // acceleration
@@ -17,7 +17,6 @@ class Experience @JvmOverloads constructor(var x: Int = 0, var y: Int = 0, initi
     var defaultPredictionFactor = 5
     var target: Hero? = hero
     var comportement = Behavior.Wait
-    var amount : Int = 1
 
     init {
         vel = initialVelocity?.let { Vector(it) } ?: Vector(0.0, 0.0)

@@ -4,17 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a0481696-cbcd-4e22-a1fd-4ed746073d26" name="Changes" comment="Ajout XP + debut des menu vague des ennemie">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/EnemyFactory.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Experience.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/GUI.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Level.kt" afterDir="false" />
+    <list default="true" id="a0481696-cbcd-4e22-a1fd-4ed746073d26" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Drawable.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Entity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/AreaSpell.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/FireballSpell.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/Spell.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/SpikeSpell.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Tile.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/test.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/tileset.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/sprite/Sprite.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Behavior.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Behavior.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Enemy.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/EnemyBase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/EnemyBase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/EnemyBase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Experience.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Experience.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/GUI.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/GUI.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Hero.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Hero.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Level.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/LevelTimer.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Renderer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Renderer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Vector.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Vector.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +32,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Class" />
+        <option value="Interface" />
+        <option value="Kotlin Interface" />
       </list>
     </option>
   </component>
@@ -40,25 +49,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/33602/Downloads/Test/CyberSurvivor/src/main/kotlin/images&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\kotlin\images" />
+      <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\images" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Pierre PARISOT\IdeaProjects\CyberSurvivorV2\src\main\kotlin" />
+      <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\kotlin\Spell" />
+      <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\kotlin\images" />
+      <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\kotlin" />
+      <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\kotlin\sprite" />
+      <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\Sprite" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -69,7 +90,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1669305741684</updated>
-      <workItem from="1669624503871" duration="20046000" />
+      <workItem from="1669624503871" duration="45244000" />
+      <workItem from="1669922699644" duration="28324000" />
     </task>
     <task id="LOCAL-00001" summary="Test">
       <created>1669399187343</created>
@@ -78,7 +100,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669399187343</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Ajout XP + debut des menu vague des ennemie">
+      <created>1669651908599</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1669651908599</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
