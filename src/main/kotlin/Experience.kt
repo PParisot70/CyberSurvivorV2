@@ -4,6 +4,7 @@ import java.util.*
 import Renderer.WINDOW_HEIGHT
 import Renderer.WINDOW_WIDTH
 import Renderer.hero
+import sprite.Sprite
 
 class Experience constructor(var x: Int = 0, var y: Int = 0, var amount : Int, initialVelocity: Vector? = Vector()) {
     var vel // velocity
@@ -89,10 +90,7 @@ class Experience constructor(var x: Int = 0, var y: Int = 0, var amount : Int, i
 
 
     fun draw(heroX: Int, heroY: Int, g: Graphics2D) {
-        g.color = Color.YELLOW
-        g.fillOval(x - heroX + WINDOW_WIDTH / 2 - (size+10) / 2, y - heroY + WINDOW_HEIGHT / 2 - (size) / 2,(size), (size))
-        g.color = Color.BLACK
-        g.drawString("$comportement ", x - heroX + WINDOW_WIDTH / 2 - size / 2 , y - heroY + WINDOW_HEIGHT / 2 - size / 2 - 4)
+        g.drawImage(Sprite.getExpSprite(0, 0), x - heroX + WINDOW_WIDTH / 2 , y - heroY + WINDOW_HEIGHT / 2 , null)
     }
 
 

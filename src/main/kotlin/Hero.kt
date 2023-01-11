@@ -1,3 +1,4 @@
+import Bonus.Powerup
 import java.awt.Color
 import java.awt.Graphics2D
 import java.util.*
@@ -7,6 +8,10 @@ import Renderer.WINDOW_WIDTH
 import Renderer.xps
 import Spell.Spell
 import Tile
+import sprite.Animation
+import sprite.Sprite
+import java.awt.geom.AffineTransform
+import kotlin.random.Random
 
 class Hero( posX: Int, posY: Int , size :Int , initialVelocity: Vector? = Vector()) : Entity(posX, posY , size ){
     var vel // velocity
@@ -15,15 +20,33 @@ class Hero( posX: Int, posY: Int , size :Int , initialVelocity: Vector? = Vector
             : Vector
     var maxVel = 5.0
     // Max distance per tick
-    var exp = 0
+    var exp = 0.0
     var level = 0
     var expnextLevel = 5
-    var magnetsize = 200
+    var magnetsize = 200.0
+    var defaultmagnetsize = 200.0
+    var Multiexp = 1.0
     var spells: MutableList<Spell> = mutableListOf()
+    var bonus: MutableList<Powerup> = mutableListOf()
     var health = 10
+    var maxhealth = 10
+    var defaulthealth = 10
 
+
+    var anim = Animation(arrayOf(
+        Sprite.getheroSprite(0, 0),
+        Sprite.getheroSprite(1, 0),
+        Sprite.getheroSprite(0, 1),
+        Sprite.getheroSprite(1, 1),
+        Sprite.getheroSprite(0, 2),
+        Sprite.getheroSprite(1, 2),
+        Sprite.getheroSprite(0, 3),
+        Sprite.getheroSprite(1, 3),
+    ),
+        5)
 
     init {
+        health = defaulthealth
         vel = initialVelocity?.let { Vector(it) } ?: Vector(0.0, 0.0)
         acc = Vector(0.0, 0.0)
         if (vel!!.getMag() > maxVel) {
@@ -33,24 +56,22 @@ class Hero( posX: Int, posY: Int , size :Int , initialVelocity: Vector? = Vector
 
 
 
+
    override fun draw(g: Graphics2D) {
         val centerX = WINDOW_WIDTH / 2
         val centerY = WINDOW_HEIGHT / 2
-        // Draw the hero always in the center of the screen
+       val image = anim.sprite
+       val at = AffineTransform.getTranslateInstance((centerX - 56).toDouble(), (centerY - 76).toDouble())
+       at.scale(0.4 , 0.4)
+       g.drawImage(image,at, null)
 
-        g.color = Color.blue
-        g.fillOval( centerX - this.size/2, centerY - this.size/2, this.size, this.size)
-        g.color = Color.white
-        g.fillOval( centerX - 10, centerY - 10, 20, 20)
-        g.color = Color.red
-        g.fillOval( centerX - 5, centerY - 5, 10, 10)
-        g.color = Color.black
-        g.drawString("$exp", 25 , 25  )
     }
 
     override fun step() {
+        anim.update()
+        println(spells)
+        println(Renderer.drawables)
         spells.forEach { it.step() }
-        println("ici")
     }
 
     fun isColliding(e: Enemy): Boolean {
@@ -85,7 +106,7 @@ class Hero( posX: Int, posY: Int , size :Int , initialVelocity: Vector? = Vector
 
 
     fun getXp(xp : Experience){
-        exp += xp.amount
+        exp += xp.amount*Multiexp
         if (exp >= expnextLevel){
             exp -= expnextLevel
             LevelUp()
@@ -105,9 +126,21 @@ class Hero( posX: Int, posY: Int , size :Int , initialVelocity: Vector? = Vector
 
 
     fun LevelUp(){
-
+        level ++
+        expnextLevel += 2 + level * 2
+        Renderer.Skillselection()
+        GameManager.state = GameState.SKILL_SELECTION
     }
 
+    fun updateState(){
+        bonus.forEach() {when(it.type) {
+            PowerUpType.SPEED ->{speed = (it.SpeedMulti+speed).toInt()}
+            PowerUpType.AIMANT ->{magnetsize = defaultmagnetsize + it.Aimant}
+            PowerUpType.HEALTHMAX ->{maxhealth = defaulthealth + it.HealthAdd}
+            PowerUpType.MULTIEXP ->{ Multiexp = it.MultiExp }
+            else -> "nothing"
+        }
+    }}
 
 }
 

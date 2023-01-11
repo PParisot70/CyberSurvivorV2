@@ -1,7 +1,8 @@
 package Spell
 
-import Enemy
+/*import Enemy
 import Entity
+import Renderer
 import Renderer.FRAMES_PER_SEC
 import Renderer.WINDOW_HEIGHT
 import Renderer.WINDOW_WIDTH
@@ -9,7 +10,7 @@ import java.awt.Color
 import java.awt.Graphics2D
 import kotlin.math.PI
 
-/*class Spike(posX: Int, posY: Int, size: Int, val damage: Int, val velocityX: Int, val velocityY : Int) : Entity(posX, posY, size) {
+class Spike(posX: Int, posY: Int, size: Int, val damage: Int, val velocityX: Int, val velocityY : Int) : Entity(posX, posY, size) {
     override fun draw(g: Graphics2D) {
         g.color = Color.red
         // Draw the spike
@@ -22,10 +23,10 @@ import kotlin.math.PI
         posY += velocityY
 
         // Check if the spike collides
-        GameManager.getEnemies().forEach {
+        Renderer.entities.forEach {
             if(it.isColliding(this)) {
                 it.health -= damage
-                GameManager.drawables -= this
+                Renderer.drawables -= this
             }
         }
 
@@ -52,4 +53,5 @@ class SpikeSpell : Spell(FRAMES_PER_SEC / 5) {
     }
 
 
-}*/
+
+*/

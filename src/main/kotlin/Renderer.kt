@@ -1,4 +1,5 @@
-import Spell.AreaSpell
+import Bonus.Powerup
+import Spell.*
 import sprite.Sprite
 import java.awt.*
 import java.awt.event.ActionEvent
@@ -24,18 +25,33 @@ object Renderer : JPanel() {
     val backgroundImage = Sprite.getTileSprite(0,0)
 
 
+
+
     val temptile = mutableListOf<Tile>()
-val maps = mutableListOf<Tile>()
+    val maps = mutableListOf<Tile>()
     val entities = mutableListOf<Enemy>()
     val xps = mutableListOf<Experience>()
     val drawables = mutableListOf<Drawable>()
     val drawablestemp = mutableListOf<Drawable>()
-
     val hero = Hero(0, 0, 70  )
+
+    var stepTimer = Timer(FRAME_IN_MSEC) { e: ActionEvent? -> stepGame() }
     var time = Instant.now()
-    var rdn : Double = 1.0
 
 
+    private var totalPausedTime = Duration.ZERO
+
+    private var pauseStartTime: Instant? = null
+
+    var filteredList = hero.bonus.filter { it.level < 5 }
+    var shuffledList = filteredList.shuffled()
+    var result = shuffledList.take(3)
+
+    // Constructeur : initialise le temps de départ et le temps cumulé des pauses à 0
+    init {
+
+        totalPausedTime = Duration.ZERO
+    }
 
 
     init {
@@ -48,7 +64,21 @@ val maps = mutableListOf<Tile>()
         createEnnemies()
         createExperiences()
         createMap()
-        hero.spells.add(AreaSpell(3))
+        //hero.spells.add(ThunderAreaSpell(0))
+        //hero.spells.add(ThunderNucSpell(0))
+        hero.spells.add(ShurikenSpell(5))
+        hero.spells.add(BlasterSpell(5))
+
+
+        hero.bonus.add(Powerup(PowerUpType.SHARPDAMAGE))
+        hero.bonus.add(Powerup(PowerUpType.EXPLODEDAMAGE))
+        hero.bonus.add(Powerup(PowerUpType.BLASTDAMAGE))
+        hero.bonus.add(Powerup(PowerUpType.HEALTHMAX))
+        hero.bonus.add(Powerup(PowerUpType.SPEED))
+        hero.bonus.add(Powerup(PowerUpType.MULTIEXP))
+        hero.bonus.add(Powerup(PowerUpType.AIMANT))
+
+
 
 
 
@@ -57,7 +87,7 @@ val maps = mutableListOf<Tile>()
             val f = JFrame()
             with (f) {
                 defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-                title = "Survival"
+                title = "SHHHHHEEEEESSSSHHHHH"
                 isResizable = false
                 add(this@Renderer, BorderLayout.CENTER)
                 pack()
@@ -66,10 +96,9 @@ val maps = mutableListOf<Tile>()
             }
 
 
-            var stepTimer = Timer(FRAME_IN_MSEC) { e: ActionEvent? -> stepGame() }
+
+
             stepTimer.start()
-
-
 
 
 
@@ -81,6 +110,7 @@ val maps = mutableListOf<Tile>()
                         KeyEvent.VK_DOWN -> downPressed = true
                         KeyEvent.VK_LEFT -> leftPressed = true
                         KeyEvent.VK_RIGHT -> rightPressed = true
+                        KeyEvent.VK_ESCAPE -> pauseGame()
                     }
                 }
 
@@ -94,7 +124,55 @@ val maps = mutableListOf<Tile>()
                 }
             })
         }
+
+
     }
+
+    fun Skillselection(){
+
+        filteredList = hero.bonus.filter { it.level < 5 }
+        shuffledList = filteredList.shuffled()
+        result = shuffledList.take(3)
+
+
+    }
+    fun pauseGame() {
+        // Mettre en pause le jeu
+        println("${GameManager.state}")
+        if(  GameManager.state == GameState.GAME){
+            pauseStartTime = Instant.now()
+            GameManager.state = GameState.PAUSE
+
+        }
+        else{
+            println("${GameManager.state} 3 ")
+            GameManager.state = GameState.GAME
+resume()
+        }
+    }
+
+
+    // Renvoie le temps écoulé depuis le début (en tenant compte des pauses)
+    val elapsedTime: Duration
+        get() =// Si l'application est en pause, le temps écoulé est le temps cumulé des pauses
+            if (pauseStartTime != null) {
+                totalPausedTime.plus(Duration.between(pauseStartTime, Instant.now()))
+            } else {
+                Duration.between(time, Instant.now()).minus(totalPausedTime)
+            }
+
+    fun resume() {
+        // Vérifie qu'il y a une pause en cours
+        if (pauseStartTime != null) {
+            // Calcul le temps écoulé pendant la pause et l'ajoute au temps cumulé des pauses
+            val pauseDuration = Duration.between(pauseStartTime, Instant.now())
+            totalPausedTime = totalPausedTime.plus(pauseDuration)
+
+            // Réinitialise le temps de début de la pause
+            pauseStartTime = null
+        }
+    }
+
 
     private fun createMap(){
         for(i in -300..WINDOW_WIDTH + 300 step Sprite.TILE_SIZE) {
@@ -153,11 +231,6 @@ val maps = mutableListOf<Tile>()
         drawablestemp.removeAll{true}
     }
     private fun createExperiences(){
-        this.xps.add(Experience(100, 100,2))
-        this.xps.add(Experience(200, 200,2))
-        this.xps.add(Experience(300, 300,2))
-
-
 
     }
 
@@ -170,20 +243,27 @@ val maps = mutableListOf<Tile>()
 
     private fun stepGame() {
         repaint()
-        var lvl = (Duration.between(time, Instant.now()).seconds / 30).toInt()+1
-        LevelTimer.levelChange(lvl)
+        var lvl =elapsedTime.toMinutes()*2 +  elapsedTime.seconds/30  +1
+        LevelTimer.levelChange((lvl).toInt())
         if (entities.size < LevelTimer.nbenemy){
             for (i in 1..(LevelTimer.nbenemy -  entities.size)) {
                 this.entities.add(EnemyFactory.createEnemy())
             }
         }
+
+
     }
+    fun formatTimer(seconds: Int): String {
+        val minutes = seconds / 60
+        val remainingSeconds = seconds % 60
+        return "${"%02d".format(minutes)}:${"%02d".format(remainingSeconds)}"
+    }
+
 
     override fun paint(gg: Graphics) {
         super.paintComponent(gg)
         val g = gg as Graphics2D
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
-
 
         // Draw the grid lines
         val gridLines = mutableListOf<GridLine>()
@@ -203,53 +283,53 @@ val maps = mutableListOf<Tile>()
 
         // Draw the ennemies
         entities.forEach { it.draw(g) }
-        entities.forEach { it.update() }
         xps.forEach{it.draw(hero.posX, hero.posY, g)}
-        xps.forEach{it.update()}
-        updateMap()
-
-        println(drawables)
-        // Draw the hero
-        hero.draw(g)
-        hero.step()
-        drawables.forEach { it.step() }
         drawables.forEach { it.draw(g) }
-
-
-        hero.magnet()
+        g.color = Color.RED
+        hero.draw(g)
         GUI.draw(g)
 
-        g.color = Color.RED
+        if (GameManager.state == GameState.GAME) {
+            entities.forEach { it.update() }
+            xps.forEach { it.update() }
+            updateMap()
+            hero.step()
+            drawables.forEach { it.step() }
+            hero.magnet()
 
 
-        // Move the Hero
-        if(upPressed && leftPressed) {
-            hero.moveUpLeft()
+
+            // Draw the hero
+            // Move the Hero
+            if(upPressed && leftPressed) {
+                hero.moveUpLeft()
+            }
+            else if(upPressed && rightPressed) {
+                hero.moveUpRight()
+            }
+            else if(downPressed && leftPressed) {
+                hero.moveDownLeft()
+            }
+            else if(downPressed && rightPressed) {
+                hero.moveDownRight()
+            }
+            else if(upPressed) {
+                hero.moveUp()
+            }
+            else if(downPressed) {
+                hero.moveDown()
+            }
+            else if(leftPressed) {
+                hero.moveLeft()
+            }
+            else if(rightPressed) {
+                hero.moveRight()
+            }
+            else {
+                // Invalid moves
+            }
         }
-        else if(upPressed && rightPressed) {
-            hero.moveUpRight()
-        }
-        else if(downPressed && leftPressed) {
-            hero.moveDownLeft()
-        }
-        else if(downPressed && rightPressed) {
-            hero.moveDownRight()
-        }
-        else if(upPressed) {
-            hero.moveUp()
-        }
-        else if(downPressed) {
-            hero.moveDown()
-        }
-        else if(leftPressed) {
-            hero.moveLeft()
-        }
-        else if(rightPressed) {
-            hero.moveRight()
-        }
-        else {
-            // Invalid moves
-        }
+
 
 
 
@@ -259,6 +339,7 @@ val maps = mutableListOf<Tile>()
         xps.removeAll {hero.isCollidingxp(it)}
 
     }
+
 
 
     class GridLine(val x1: Int, val y1: Int, val x2: Int, val y2: Int) {

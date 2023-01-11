@@ -4,9 +4,12 @@ import java.util.*
 import Renderer.WINDOW_HEIGHT
 import Renderer.WINDOW_WIDTH
 import Renderer.hero
+import sprite.Animation
+import sprite.Sprite
+import java.awt.geom.AffineTransform
 
 
-class Enemy @JvmOverloads constructor(posX: Int = 0, posY: Int = 0, size : Int = 20 , initialVelocity: Vector? = Vector()): Entity(posX, posY, size ) {
+class Enemy  (posX: Int = 0, posY: Int = 0, size : Int = 20 , initialVelocity: Vector? = Vector()): Entity(posX, posY, size ) {
     var vel // velocity
             : Vector? = null
     var acc // acceleration
@@ -20,7 +23,18 @@ class Enemy @JvmOverloads constructor(posX: Int = 0, posY: Int = 0, size : Int =
     var defaultPredictionFactor = 5
     var target: Hero? = hero
     var comportement = Behavior.Seek
-    var health = 1
+    var health = 0.0
+
+    var anim = Animation(arrayOf(
+    Sprite.getEnnemieSprite(0, 0),
+        Sprite.getEnnemieSprite(1, 0),
+        Sprite.getEnnemieSprite(0, 1),
+        Sprite.getEnnemieSprite(1, 1),
+        Sprite.getEnnemieSprite(0, 2),
+        Sprite.getEnnemieSprite(1, 2),
+    ),
+        5)
+
 
     init {
         vel = initialVelocity?.let { Vector(it) } ?: Vector(0.0, 0.0)
@@ -28,6 +42,11 @@ class Enemy @JvmOverloads constructor(posX: Int = 0, posY: Int = 0, size : Int =
         if (vel!!.getMag() > maxVel) {
             vel!!.setMag(maxVel)
         }
+
+        synchronized(LevelTimer.sync) {
+            health = 10 * LevelTimer.healthmutiply
+        }
+
     }
 
 
@@ -42,6 +61,7 @@ class Enemy @JvmOverloads constructor(posX: Int = 0, posY: Int = 0, size : Int =
 
 
     fun update() {
+        anim.update()
         if (target != null ) {
             when (comportement) {
                 Behavior.Seek -> Seek(target!!.posX.toDouble(), target!!.posY.toDouble())
@@ -107,13 +127,12 @@ class Enemy @JvmOverloads constructor(posX: Int = 0, posY: Int = 0, size : Int =
         )
     }
 
-    @JvmOverloads
+
     fun Pursue(v: Hero?, predictionFactor: Int = defaultPredictionFactor) {
         val pos = GetPredictedPosition(v, predictionFactor)
         Seek(pos[0].toDouble(), pos[1].toDouble())
     }
 
-    @JvmOverloads
     fun Evade(v: Hero?, predictionFactor: Int = defaultPredictionFactor) {
         val pos = GetPredictedPosition(v, predictionFactor)
         Flee(pos[0].toDouble(), pos[1].toDouble())
@@ -143,9 +162,18 @@ class Enemy @JvmOverloads constructor(posX: Int = 0, posY: Int = 0, size : Int =
 
     override fun draw(g: Graphics2D) {
         g.color = color
+        val image = anim.sprite
+        val at = AffineTransform.getTranslateInstance((posX - hero.posX + WINDOW_WIDTH / 2 - (size+10)).toDouble() , (posY - hero.posY + WINDOW_HEIGHT / 2- (size+10)).toDouble())
+        if (hero.posX -50 > posX){
+            at.scale(-1.0 ,1.0)
+            at.translate(-64.0, 0.0)
+        }
+        if (hero.posX +50 < posX){
+            at.scale(1.0 ,1.0)
+        }
         g.fillOval(posX - Renderer.hero.posX + WINDOW_WIDTH / 2 - (size+10) / 2, posY - Renderer.hero.posY + WINDOW_HEIGHT / 2 - (size+10) / 2,(size+10), (size+10))
-        g.color = Color.white
-        g.drawString("$health", posX - Renderer.hero.posX + WINDOW_WIDTH / 2 - size / 2 , posY - Renderer.hero.posY + WINDOW_HEIGHT / 2 - size / 2 - 4)
+        g.drawImage(image,at, null)
+
     }
 
     fun dying():Boolean{
