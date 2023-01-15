@@ -1,5 +1,6 @@
 import Renderer.hero
-import java.util.Random
+import java.util.*
+
 
 object EnemyFactory {
     var rightorleft = 1
@@ -15,7 +16,7 @@ object EnemyFactory {
         while (verif()) {
             newrdn()
         }
-        return Enemy(x, y)
+        return Enemy(x, y ,20,  getRandomEnemyType())
     }
 
     fun randomX(): Int {
@@ -71,4 +72,18 @@ object EnemyFactory {
         return true
 
     }
+
+
+    fun getRandomEnemyType(): EnemyType {
+        val rand = kotlin.random.Random.nextDouble()
+        val limit = EnemyType.values().sumByDouble { it.probability }
+        val prob = rand * limit
+        var cumProb = 0.0
+        for (type in EnemyType.values()) {
+            cumProb += type.probability
+            if (prob < cumProb) return type
+        }
+        return EnemyType.values().first()
+    }
+
 }

@@ -5,38 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a0481696-cbcd-4e22-a1fd-4ed746073d26" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Bonus/PowerUpType.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Bonus/Powerup.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Font/abcd.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/GameManager.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Menu.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/Blaster.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/SpellType.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/ThunderArea.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/ThunderNuc.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/shuriken.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Time.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/Blast.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/Ennemie.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/EnnemieBase.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/Hero.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/Shuriken.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/Vague.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/exp.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/level.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/sprite/Animation.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/sprite/Frame.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/EnemyType.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/EnemyBase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/EnemyBase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Experience.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Experience.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/EnemyFactory.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/EnemyFactory.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/GUI.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/GUI.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Hero.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Hero.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/LevelTimer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/LevelTimer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Renderer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Renderer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Spell/AreaSpell.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Spell/Spell.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/Spell.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Spell/SpikeSpell.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/SpikeSpell.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/images/test.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/images/EnnemieBase.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/images/EnnemieStrong.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/sprite/Sprite.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/sprite/Sprite.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -50,8 +24,8 @@
         <option value="Interface" />
         <option value="Kotlin Interface" />
         <option value="Kotlin File" />
-        <option value="Kotlin Class" />
         <option value="Kotlin Object" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -127,7 +101,7 @@
       <workItem from="1673292255502" duration="7136000" />
       <workItem from="1673299460943" duration="29000" />
       <workItem from="1673299503746" duration="306000" />
-      <workItem from="1673299825906" duration="5100000" />
+      <workItem from="1673299825906" duration="12326000" />
     </task>
     <task id="LOCAL-00001" summary="Test">
       <created>1669399187343</created>
@@ -150,7 +124,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670272407895</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Bon beaucoup trop de truc rajouté je gere mal mon versionning">
+      <created>1673444402742</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1673444402742</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -171,7 +152,8 @@
     <MESSAGE value="Test" />
     <MESSAGE value="Ajout XP + debut des menu vague des ennemie" />
     <MESSAGE value="ca avance" />
-    <option name="LAST_COMMIT_MESSAGE" value="ca avance" />
+    <MESSAGE value="Bon beaucoup trop de truc rajouté je gere mal mon versionning" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bon beaucoup trop de truc rajouté je gere mal mon versionning" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

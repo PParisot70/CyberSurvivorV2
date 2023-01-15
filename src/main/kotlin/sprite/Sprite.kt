@@ -18,7 +18,7 @@ private var blastsheet :BufferedImage? = null
     private var    GUIvaguesheet: BufferedImage? = null
     private var    herosheet: BufferedImage? = null
     private var       shurikensheet: BufferedImage? = null
-
+    private var       strongsheet: BufferedImage? = null
 
     const val TILE_SIZE = 128
     fun loadSprite(file: String): BufferedImage? {
@@ -102,5 +102,12 @@ private var blastsheet :BufferedImage? = null
             herosheet = loadSprite("Hero")
         }
         return herosheet!!.getSubimage(xGrid * 315, yGrid *340, 315, 340)
+    }
+
+    fun getSTRONGSprite(xGrid: Int, yGrid: Int): BufferedImage {
+        if (strongsheet == null) {
+            strongsheet = loadSprite("EnnemieStrong")
+        }
+        return strongsheet!!.getSubimage(xGrid * 128, yGrid *128, 128, 128)
     }
 }

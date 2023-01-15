@@ -114,8 +114,6 @@ if (GameManager.state == GameState.PAUSE) {
              */
             g.color = Color.YELLOW
             g.font = Font("ComicSans MS", Font.PLAIN, 20)
-
-
         }
 
 

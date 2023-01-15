@@ -9,7 +9,7 @@ import sprite.Sprite
 import java.awt.geom.AffineTransform
 
 
-class Enemy  (posX: Int = 0, posY: Int = 0, size : Int = 20 , initialVelocity: Vector? = Vector()): Entity(posX, posY, size ) {
+class Enemy  (posX: Int = 0, posY: Int = 0, size : Int = 20 , type : EnemyType ): Entity(posX, posY, size ) {
     var vel // velocity
             : Vector? = null
     var acc // acceleration
@@ -24,7 +24,8 @@ class Enemy  (posX: Int = 0, posY: Int = 0, size : Int = 20 , initialVelocity: V
     var target: Hero? = hero
     var comportement = Behavior.Seek
     var health = 0.0
-
+    var initialVelocity: Vector? = Vector()
+var realsize = size
     var anim = Animation(arrayOf(
     Sprite.getEnnemieSprite(0, 0),
         Sprite.getEnnemieSprite(1, 0),
@@ -43,9 +44,32 @@ class Enemy  (posX: Int = 0, posY: Int = 0, size : Int = 20 , initialVelocity: V
             vel!!.setMag(maxVel)
         }
 
+        when(type) {
+            EnemyType.BASIC ->{health = 10 * LevelTimer.healthmutiply}
+            EnemyType.STRONG -> {
+                realsize = 80
+                maxVel *= 0.6
+                health = 10000 * LevelTimer.healthmutiply
+                anim = Animation(arrayOf(
+                    Sprite.getSTRONGSprite(0, 0),
+                    Sprite.getSTRONGSprite(1, 0),
+                    Sprite.getSTRONGSprite(0, 1),
+                    Sprite.getSTRONGSprite(1, 1),
+                ),4
+                )
+            }
+            EnemyType.FAST -> {}
+            EnemyType.BLASTER -> {}
+            EnemyType.BOSS ->  {}
+
+        }
+
+
         synchronized(LevelTimer.sync) {
             health = 10 * LevelTimer.healthmutiply
         }
+
+
 
     }
 
@@ -150,7 +174,7 @@ class Enemy  (posX: Int = 0, posY: Int = 0, size : Int = 20 , initialVelocity: V
 
 
     fun CheckCollision(v2: Enemy): Boolean {
-        return Math.pow((posX - v2.posX).toDouble(), 2.0) + Math.pow((posY - v2.posY).toDouble(), 2.0) < Math.pow((v2.size + size).toDouble(), 2.0)
+        return Math.pow((posX - v2.posX).toDouble(), 2.0) + Math.pow((posY - v2.posY).toDouble(), 2.0) < Math.pow((v2.realsize + realsize).toDouble(), 2.0)
     }
     companion object {
         private fun CalculateDistance(x1: Double, y1: Double, x2: Double, y2: Double): Double {
@@ -163,7 +187,7 @@ class Enemy  (posX: Int = 0, posY: Int = 0, size : Int = 20 , initialVelocity: V
     override fun draw(g: Graphics2D) {
         g.color = color
         val image = anim.sprite
-        val at = AffineTransform.getTranslateInstance((posX - hero.posX + WINDOW_WIDTH / 2 - (size+10)).toDouble() , (posY - hero.posY + WINDOW_HEIGHT / 2- (size+10)).toDouble())
+        val at = AffineTransform.getTranslateInstance((posX - hero.posX + WINDOW_WIDTH / 2 - (realsize+10)).toDouble() , (posY - hero.posY + WINDOW_HEIGHT / 2- (realsize+10)).toDouble())
         if (hero.posX -50 > posX){
             at.scale(-1.0 ,1.0)
             at.translate(-64.0, 0.0)
@@ -171,7 +195,7 @@ class Enemy  (posX: Int = 0, posY: Int = 0, size : Int = 20 , initialVelocity: V
         if (hero.posX +50 < posX){
             at.scale(1.0 ,1.0)
         }
-        g.fillOval(posX - Renderer.hero.posX + WINDOW_WIDTH / 2 - (size+10) / 2, posY - Renderer.hero.posY + WINDOW_HEIGHT / 2 - (size+10) / 2,(size+10), (size+10))
+        g.fillOval(posX - Renderer.hero.posX + WINDOW_WIDTH / 2 - (realsize+10) / 2, posY - Renderer.hero.posY + WINDOW_HEIGHT / 2 - (realsize+10) / 2,(realsize+10), (realsize+10))
         g.drawImage(image,at, null)
 
     }
