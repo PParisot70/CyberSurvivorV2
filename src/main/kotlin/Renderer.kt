@@ -136,6 +136,9 @@ object Renderer : JPanel() {
 
 
     }
+    fun ChooseSkill(int : Int){
+        result[int].levelUp()
+    }
     fun pauseGame() {
         // Mettre en pause le jeu
         println("${GameManager.state}")

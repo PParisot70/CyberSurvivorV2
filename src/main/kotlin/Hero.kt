@@ -69,8 +69,6 @@ class Hero( posX: Int, posY: Int , size :Int , initialVelocity: Vector? = Vector
 
     override fun step() {
         anim.update()
-        println(spells)
-        println(Renderer.drawables)
         spells.forEach { it.step() }
     }
 
