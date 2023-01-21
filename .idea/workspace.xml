@@ -5,11 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a0481696-cbcd-4e22-a1fd-4ed746073d26" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/MenuButton.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/Aimant.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/Explosive.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/FAST.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/MultiExp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/Sharpness.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/SpeedPLus.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/Viemaxx_plus_.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/blaster.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Bonus/PowerUpType.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Bonus/PowerUpType.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Bonus/Powerup.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Bonus/Powerup.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/EnemyBase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/EnemyBase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/EnemyFactory.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/EnemyFactory.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/EnemyType.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/EnemyType.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/GUI.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/GUI.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/GameManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/GameManager.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Hero.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Hero.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/MenuButton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/MenuButton.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Renderer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Renderer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Spell/Blaster.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/Blaster.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Spell/Spell.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/Spell.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Spell/SpellType.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/SpellType.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Spell/ThunderArea.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/ThunderArea.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Spell/ThunderNuc.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/ThunderNuc.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Spell/shuriken.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/shuriken.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/sprite/Sprite.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/sprite/Sprite.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,9 +88,9 @@
       <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\kotlin\images" />
       <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\kotlin\Font" />
       <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\kotlin" />
-      <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\kotlin\images" />
       <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\kotlin\sprite" />
       <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\kotlin\Spell" />
     </key>
@@ -100,7 +122,9 @@
       <workItem from="1673299460943" duration="29000" />
       <workItem from="1673299503746" duration="306000" />
       <workItem from="1673299825906" duration="12326000" />
-      <workItem from="1674030494024" duration="9526000" />
+      <workItem from="1674030494024" duration="27560000" />
+      <workItem from="1674317383254" duration="6678000" />
+      <workItem from="1674332599786" duration="4644000" />
     </task>
     <task id="LOCAL-00001" summary="Test">
       <created>1669399187343</created>
@@ -130,7 +154,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673444402742</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Bon beaucoup trop de truc rajouté je gere mal mon versionning">
+      <created>1674047159488</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1674047159488</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

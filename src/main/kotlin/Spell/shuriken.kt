@@ -75,7 +75,7 @@ class Shuriken(posX: Int, posY: Int, size: Int, var damage : Int,var range : Int
     }
 }
 
-class ShurikenSpell(level : Int ) : Spell(40, level) {
+class ShurikenSpell(level : Int ) : Spell(40, level, "Shuriken") {
 
     override fun cast() {
 

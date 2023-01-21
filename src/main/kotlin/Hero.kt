@@ -31,6 +31,7 @@ class Hero( posX: Int, posY: Int , size :Int , initialVelocity: Vector? = Vector
     var health = 10
     var maxhealth = 10
     var defaulthealth = 10
+    var direction = 0
 
 
     var anim = Animation(arrayOf(
@@ -58,13 +59,19 @@ class Hero( posX: Int, posY: Int , size :Int , initialVelocity: Vector? = Vector
 
 
    override fun draw(g: Graphics2D) {
+       println(direction)
         val centerX = WINDOW_WIDTH / 2
         val centerY = WINDOW_HEIGHT / 2
        val image = anim.sprite
        val at = AffineTransform.getTranslateInstance((centerX - 56).toDouble(), (centerY - 76).toDouble())
-       at.scale(0.4 , 0.4)
+       if (direction == 0){
+           at.scale(0.4 ,0.4)
+       }
+       if (direction == 1){
+           at.scale(-0.4 ,0.4)
+           at.translate(-300.0, 0.0)
+       }
        g.drawImage(image,at, null)
-
     }
 
     override fun step() {

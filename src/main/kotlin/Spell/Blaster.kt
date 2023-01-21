@@ -84,7 +84,7 @@ class Blaster(posX: Int, posY: Int, size: Int, var damage : Int,var range : Int,
     }
 }
 
-class BlasterSpell(level : Int ) : Spell(40, level) {
+class BlasterSpell(level : Int ) : Spell(40, level, "Blaster") {
 
     override fun cast() {
 

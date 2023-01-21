@@ -19,6 +19,14 @@ private var blastsheet :BufferedImage? = null
     private var    herosheet: BufferedImage? = null
     private var       shurikensheet: BufferedImage? = null
     private var       strongsheet: BufferedImage? = null
+    private var       fastsheet: BufferedImage? = null
+    private var       aimantsheet: BufferedImage? = null
+    private var       blastersheet: BufferedImage? = null
+    private var       Exp_sheet: BufferedImage? = null
+    private var       explosivesheet: BufferedImage? = null
+    private var       Sharpnesssheet: BufferedImage? = null
+    private var       Speedplussheet: BufferedImage? = null
+    private var       viemaxsheet: BufferedImage? = null
 
     const val TILE_SIZE = 128
     fun loadSprite(file: String): BufferedImage? {
@@ -109,5 +117,55 @@ private var blastsheet :BufferedImage? = null
             strongsheet = loadSprite("EnnemieStrong")
         }
         return strongsheet!!.getSubimage(xGrid * 128, yGrid *128, 128, 128)
+    }
+
+    fun getAimantSprite(xGrid: Int, yGrid: Int): BufferedImage {
+        if (aimantsheet == null) {
+           aimantsheet = loadSprite("Aimant")
+        }
+        return aimantsheet!!.getSubimage(xGrid * 32, yGrid *32, 32, 32)
+    }
+    fun getBlasterSprite(xGrid: Int, yGrid: Int): BufferedImage {
+        if (blastersheet == null) {
+            blastersheet = loadSprite("blaster")
+        }
+        return blastersheet!!.getSubimage(xGrid * 32, yGrid *32, 32, 32)
+    }
+    fun getExp_Sprite(xGrid: Int, yGrid: Int): BufferedImage {
+        if (Exp_sheet == null) {
+            Exp_sheet = loadSprite("MultiExp")
+        }
+        return Exp_sheet!!.getSubimage(xGrid * 32, yGrid *32, 32, 32)
+    }
+    fun getExplosiveSprite(xGrid: Int, yGrid: Int): BufferedImage {
+        if (explosivesheet == null) {
+            explosivesheet = loadSprite("Explosive")
+        }
+        return explosivesheet!!.getSubimage(xGrid * 32, yGrid *32, 32, 32)
+    }
+    fun getSharpnessSprite(xGrid: Int, yGrid: Int): BufferedImage {
+        if (Sharpnesssheet == null) {
+            Sharpnesssheet = loadSprite("Sharpness")
+        }
+        return Sharpnesssheet!!.getSubimage(xGrid * 32, yGrid *32, 32, 32)
+    }
+    fun getSpeedPLUSSprite(xGrid: Int, yGrid: Int): BufferedImage {
+        if (Speedplussheet == null) {
+            Speedplussheet = loadSprite("SpeedPLus")
+        }
+        return Speedplussheet!!.getSubimage(xGrid * 32, yGrid *32, 32, 32)
+    }
+    fun getviemaxSprite(xGrid: Int, yGrid: Int): BufferedImage {
+        if (viemaxsheet == null) {
+            viemaxsheet = loadSprite("Viemaxx_plus_")
+        }
+        return viemaxsheet!!.getSubimage(xGrid * 32, yGrid *32, 32, 32)
+    }
+
+    fun getFastsprite(xGrid: Int, yGrid: Int): BufferedImage {
+        if (fastsheet == null) {
+            fastsheet = loadSprite("FAST")
+        }
+        return fastsheet!!.getSubimage(xGrid * 50, yGrid *50, 50, 50)
     }
 }

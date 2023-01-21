@@ -61,7 +61,7 @@ fun updateState(){
 
 }
 
-class ThunderAreaSpell(level : Int ) : Spell(FRAMES_PER_SEC , level) {
+class ThunderAreaSpell(level : Int ) : Spell(FRAMES_PER_SEC , level,"ExplodeArena") {
     override fun cast() {
 var s = ThunderArea(Renderer.hero.posX, Renderer.hero.posY,150,level)
        Renderer.addDrawable(s)

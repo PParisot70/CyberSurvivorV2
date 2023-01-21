@@ -22,8 +22,7 @@ object Renderer : JPanel() {
     var downPressed = false
     var leftPressed = false
     var rightPressed = false
-    val backgroundImage = Sprite.getTileSprite(0,0)
-
+    var escapePressed = false
 
 
 
@@ -47,36 +46,47 @@ object Renderer : JPanel() {
     var shuffledList = filteredList.shuffled()
     var result = shuffledList.take(3)
 
+    var filteredListspell = hero.spells.filter { it.level < 5 }
+    var shuffledListspell = filteredListspell.shuffled()
+    var  resultspell = shuffledListspell.take(3)
+    val f = JFrame()
     // Constructeur : initialise le temps de départ et le temps cumulé des pauses à 0
     init {
-
+        preferredSize = Dimension(WINDOW_WIDTH, WINDOW_HEIGHT)
+        background = Color.white
         totalPausedTime = Duration.ZERO
     }
 
 
-    init {
-        preferredSize = Dimension(WINDOW_WIDTH, WINDOW_HEIGHT)
-        background = Color.white
-    }
 
     fun initGame() {
+        temptile.clear()
+        hero.spells.clear()
+        hero.bonus.clear()
+        maps.clear()
+        entities.clear()
+        xps.clear()
+        pauseStartTime = null
+        drawables.clear()
+        drawablestemp.clear()
+        totalPausedTime = Duration.ZERO
         time = Instant.now()
         createEnnemies()
         createExperiences()
         createMap()
         //hero.spells.add(ThunderAreaSpell(0))
-        //hero.spells.add(ThunderNucSpell(0))
-        hero.spells.add(ShurikenSpell(5))
-        hero.spells.add(BlasterSpell(5))
+        hero.spells.add(ThunderNucSpell(1))
+        hero.spells.add(ShurikenSpell(0))
+        hero.spells.add(BlasterSpell(3))
 
 
-        hero.bonus.add(Powerup(PowerUpType.SHARPDAMAGE))
-        hero.bonus.add(Powerup(PowerUpType.EXPLODEDAMAGE))
-        hero.bonus.add(Powerup(PowerUpType.BLASTDAMAGE))
-        hero.bonus.add(Powerup(PowerUpType.HEALTHMAX))
-        hero.bonus.add(Powerup(PowerUpType.SPEED))
-        hero.bonus.add(Powerup(PowerUpType.MULTIEXP))
-        hero.bonus.add(Powerup(PowerUpType.AIMANT))
+        hero.bonus.add(Powerup(PowerUpType.SHARPDAMAGE , Sprite.getSharpnessSprite(0,0)))
+        hero.bonus.add(Powerup(PowerUpType.EXPLODEDAMAGE , Sprite.getExplosiveSprite(0,0)))
+        hero.bonus.add(Powerup(PowerUpType.BLASTDAMAGE , Sprite.getBlasterSprite(0,0)))
+        hero.bonus.add(Powerup(PowerUpType.HEALTHMAX, Sprite.getviemaxSprite(0,0)))
+        hero.bonus.add(Powerup(PowerUpType.SPEED , Sprite.getSpeedPLUSSprite(0,0)))
+        hero.bonus.add(Powerup(PowerUpType.MULTIEXP, Sprite.getExp_Sprite(0,0)))
+        hero.bonus.add(Powerup(PowerUpType.AIMANT, Sprite.getAimantSprite(0,0)))
 
 
 
@@ -84,10 +94,10 @@ object Renderer : JPanel() {
 
         this.entities.addAll(entities)
         SwingUtilities.invokeLater {
-            val f = JFrame()
+
             with (f) {
                 defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-                title = "SHHHHHEEEEESSSSHHHHH"
+                title = "CyberSurvivor"
                 isResizable = false
                 add(this@Renderer, BorderLayout.CENTER)
                 pack()
@@ -106,11 +116,13 @@ object Renderer : JPanel() {
             f.addKeyListener(object : KeyAdapter() {
                 override fun keyPressed(e: KeyEvent) {
                     when (e.keyCode) {
-                        KeyEvent.VK_UP -> upPressed = true
+                        KeyEvent.VK_UP -> {upPressed = true
+                            }
                         KeyEvent.VK_DOWN -> downPressed = true
                         KeyEvent.VK_LEFT -> leftPressed = true
                         KeyEvent.VK_RIGHT -> rightPressed = true
-                        KeyEvent.VK_ESCAPE -> pauseGame()
+                        KeyEvent.VK_ESCAPE -> escapePressed = true
+
                     }
                 }
 
@@ -120,6 +132,7 @@ object Renderer : JPanel() {
                         KeyEvent.VK_DOWN -> downPressed = false
                         KeyEvent.VK_LEFT -> leftPressed = false
                         KeyEvent.VK_RIGHT -> rightPressed = false
+                        KeyEvent.VK_ESCAPE -> rightPressed = false
                     }
                 }
             })
@@ -129,28 +142,44 @@ object Renderer : JPanel() {
     }
 
     fun Skillselection(){
-
+if (hero.level%5 == 0){
+    filteredListspell = hero.spells.filter { it.level < 5 }
+    shuffledListspell = filteredListspell.shuffled()
+    resultspell = shuffledListspell.take(3)
+}else{
         filteredList = hero.bonus.filter { it.level < 5 }
         shuffledList = filteredList.shuffled()
-        result = shuffledList.take(3)
-
+        result = shuffledList.take(3)}
 
     }
     fun ChooseSkill(int : Int){
         result[int].levelUp()
     }
+
+    fun ChooseSpell(int:Int){
+        if (resultspell[int].level <5){ resultspell[int].level+=1}
+    }
     fun pauseGame() {
         // Mettre en pause le jeu
-        println("${GameManager.state}")
+        println("${GameManager.state} llalalalalalalalal")
+
         if(  GameManager.state == GameState.GAME){
             pauseStartTime = Instant.now()
             GameManager.state = GameState.PAUSE
-
+            println("!!!!!!!!!!!!!!${GameManager.state}   !!!!!!!!!!!!!!")
         }
-        else{
+        else if(  GameManager.state == GameState.PAUSE){
             println("${GameManager.state} 3 ")
             GameManager.state = GameState.GAME
-resume()
+            resume()
+            println("8888888888888888${GameManager.state}888888888888888")
+        }
+
+
+       if(  GameManager.state == GameState.SKILL_SELECTION){
+            println("${GameManager.state} 3 ")
+            GameManager.state = GameState.GAME
+            resume()
         }
     }
 
@@ -178,8 +207,8 @@ resume()
 
 
     private fun createMap(){
-        for(i in -300..WINDOW_WIDTH + 300 step Sprite.TILE_SIZE) {
-            for (j in -300..WINDOW_HEIGHT + 300 step Sprite.TILE_SIZE) {
+        for(i in -600..WINDOW_WIDTH + 300 step Sprite.TILE_SIZE) {
+            for (j in -600..WINDOW_HEIGHT + 300 step Sprite.TILE_SIZE) {
                 this.maps.add(TileFactory.createTile(i, j))
             }
         }
@@ -256,11 +285,6 @@ resume()
 
 
     }
-    fun formatTimer(seconds: Int): String {
-        val minutes = seconds / 60
-        val remainingSeconds = seconds % 60
-        return "${"%02d".format(minutes)}:${"%02d".format(remainingSeconds)}"
-    }
 
 
     override fun paint(gg: Graphics) {
@@ -306,15 +330,19 @@ resume()
             // Move the Hero
             if(upPressed && leftPressed) {
                 hero.moveUpLeft()
+                hero.direction  = 1
             }
             else if(upPressed && rightPressed) {
                 hero.moveUpRight()
+                hero.direction  = 0
             }
             else if(downPressed && leftPressed) {
                 hero.moveDownLeft()
+                hero.direction  = 1
             }
             else if(downPressed && rightPressed) {
                 hero.moveDownRight()
+                hero.direction  = 0
             }
             else if(upPressed) {
                 hero.moveUp()
@@ -324,16 +352,22 @@ resume()
             }
             else if(leftPressed) {
                 hero.moveLeft()
+                hero.direction  = 1
             }
             else if(rightPressed) {
                 hero.moveRight()
+                hero.direction  = 0
             }
+
             else {
                 // Invalid moves
             }
         }
 
-
+        if(escapePressed){
+            pauseGame()
+            escapePressed = false
+        }
 
 
         // Check if the hero is in collision with an enemy

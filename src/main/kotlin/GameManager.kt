@@ -5,7 +5,7 @@ enum class GameState {
     GAME, SKILL_SELECTION, GAME_OVER,PAUSE,MENU
 }
 object GameManager {
-    var state = GameState.GAME
+    var state = GameState.MENU
 
     var enemyCooldown = 10
     var enemySpawnCount = 1

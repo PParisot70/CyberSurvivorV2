@@ -1,6 +1,6 @@
 package Spell
 
-abstract class Spell(var cooldown: Int , var level: Int ) {
+abstract class Spell(var cooldown: Int , var level: Int , var name : String ) {
     var currentCooldown = 0
 
     fun step() {
@@ -12,6 +12,7 @@ abstract class Spell(var cooldown: Int , var level: Int ) {
             currentCooldown = cooldown
         }
     }
+
 
     abstract fun cast()
 }

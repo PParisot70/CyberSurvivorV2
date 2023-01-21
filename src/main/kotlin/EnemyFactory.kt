@@ -16,7 +16,7 @@ object EnemyFactory {
         while (verif()) {
             newrdn()
         }
-        return Enemy(x, y ,20,  getRandomEnemyType())
+        return Enemy(x, y ,20,  EnemyType.FAST)
     }
 
     fun randomX(): Int {

@@ -60,7 +60,7 @@ class ThunderNuc(posX: Int,posY: Int,size: Int=50, var  level : Int) : Entity(po
 
 }
 
-class ThunderNucSpell(level : Int ) : Spell(500 , level) {
+class ThunderNucSpell(level : Int ) : Spell(500 , level , "ThunderNuc") {
     override fun cast() {
         var t = ThunderArea(Renderer.hero.posX, Renderer.hero.posY,1000,level)
         Renderer.addDrawable(t)

@@ -26,6 +26,7 @@ class Enemy  (posX: Int = 0, posY: Int = 0, size : Int = 20 , type : EnemyType )
     var health = 0.0
     var initialVelocity: Vector? = Vector()
 var realsize = size
+    var type = type
     var anim = Animation(arrayOf(
     Sprite.getEnnemieSprite(0, 0),
         Sprite.getEnnemieSprite(1, 0),
@@ -58,7 +59,23 @@ var realsize = size
                 ),4
                 )
             }
-            EnemyType.FAST -> {}
+            EnemyType.FAST -> {
+                realsize = 20
+                maxVel *= 0.6
+                health = 100.0
+                speed = speed + 25
+                anim = Animation(arrayOf(
+                    Sprite.getFastsprite(0, 0),
+                    Sprite.getFastsprite(1, 0),
+                    Sprite.getFastsprite(0, 1),
+                    Sprite.getFastsprite(1, 1),
+                    Sprite.getFastsprite(0, 2),
+                    Sprite.getFastsprite(1, 2),
+                    Sprite.getFastsprite(0, 3),
+                    Sprite.getFastsprite(1, 3),
+                ),8
+                )
+            }
             EnemyType.BLASTER -> {}
             EnemyType.BOSS ->  {}
 
@@ -188,6 +205,8 @@ var realsize = size
         g.color = color
         val image = anim.sprite
         val at = AffineTransform.getTranslateInstance((posX - hero.posX + WINDOW_WIDTH / 2 - (realsize+10)).toDouble() , (posY - hero.posY + WINDOW_HEIGHT / 2- (realsize+10)).toDouble())
+
+        if (type == EnemyType.BASIC){
         if (hero.posX -50 > posX){
             at.scale(-1.0 ,1.0)
             at.translate(-64.0, 0.0)
@@ -196,9 +215,35 @@ var realsize = size
             at.scale(1.0 ,1.0)
         }
         g.fillOval(posX - Renderer.hero.posX + WINDOW_WIDTH / 2 - (realsize+10) / 2, posY - Renderer.hero.posY + WINDOW_HEIGHT / 2 - (realsize+10) / 2,(realsize+10), (realsize+10))
-        g.drawImage(image,at, null)
+        g.drawImage(image,at, null)}
 
-    }
+        if (type == EnemyType.FAST){
+            at.scale(-2.0 ,2.0)
+            at.translate(0.0, -10.0)
+            if (hero.posX -50 < posX){
+                at.scale(-1.0 ,1.0)
+
+            }
+            if (hero.posX +50 > posX){
+                at.scale(1.0 ,1.0)
+                at.translate(-30.0, 0.0)
+
+            }
+            g.fillOval(posX - Renderer.hero.posX + WINDOW_WIDTH / 2 - (realsize+10) / 2, posY - Renderer.hero.posY + WINDOW_HEIGHT / 2 - (realsize+10) / 2,(realsize+10), (realsize+10))
+
+            g.drawImage(image,at, null)}
+
+
+
+        if (type == EnemyType.STRONG){
+            if (hero.posX -50 > posX){
+                at.scale(-1.0 ,1.0)
+                at.translate(-128.0, 0.0)
+            }
+            if (hero.posX +50 < posX){
+                at.scale(1.0 ,1.0)
+            }
+    }}
 
     fun dying():Boolean{
         if (health <= 0){
