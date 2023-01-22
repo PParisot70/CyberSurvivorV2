@@ -15,6 +15,10 @@ class MenuButton(text: String, x: Int, y: Int, width: Int, height: Int) : Button
         addMouseListener(object : MouseAdapter() {
             override fun mouseEntered(e: MouseEvent?) {
                 hover = true
+                GameManager.buttonhover.stop();
+                GameManager.buttonhover.clip.setFramePosition(0);
+                GameManager.buttonhover.play()
+;
                 setBounds(x - 10, y - 10, width + 20, height + 20)
             }
 

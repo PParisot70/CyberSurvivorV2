@@ -61,9 +61,8 @@ var realsize = size
             }
             EnemyType.FAST -> {
                 realsize = 20
-                maxVel *= 0.6
-                health = 100.0
-                speed = speed + 25
+                maxVel *= 1.4
+
                 anim = Animation(arrayOf(
                     Sprite.getFastsprite(0, 0),
                     Sprite.getFastsprite(1, 0),
@@ -76,8 +75,6 @@ var realsize = size
                 ),8
                 )
             }
-            EnemyType.BLASTER -> {}
-            EnemyType.BOSS ->  {}
 
         }
 
@@ -214,45 +211,46 @@ var realsize = size
         if (hero.posX +50 < posX){
             at.scale(1.0 ,1.0)
         }
-        g.fillOval(posX - Renderer.hero.posX + WINDOW_WIDTH / 2 - (realsize+10) / 2, posY - Renderer.hero.posY + WINDOW_HEIGHT / 2 - (realsize+10) / 2,(realsize+10), (realsize+10))
-        g.drawImage(image,at, null)}
+         g.drawImage(image,at, null)}
 
-        if (type == EnemyType.FAST){
-            at.scale(-2.0 ,2.0)
+        if (type == EnemyType.FAST) {
+            at.scale(-2.0, 2.0)
             at.translate(0.0, -10.0)
-            if (hero.posX -50 < posX){
-                at.scale(-1.0 ,1.0)
+            if (hero.posX - 50 < posX) {
+                at.scale(-1.0, 1.0)
 
             }
-            if (hero.posX +50 > posX){
-                at.scale(1.0 ,1.0)
+            if (hero.posX + 50 > posX) {
+                at.scale(1.0, 1.0)
                 at.translate(-30.0, 0.0)
 
             }
-            g.fillOval(posX - Renderer.hero.posX + WINDOW_WIDTH / 2 - (realsize+10) / 2, posY - Renderer.hero.posY + WINDOW_HEIGHT / 2 - (realsize+10) / 2,(realsize+10), (realsize+10))
-
-            g.drawImage(image,at, null)}
-
-
-
+            g.drawImage(image,at, null)
+        }
         if (type == EnemyType.STRONG){
-            if (hero.posX -50 > posX){
+            if (hero.posX -50 < posX){
                 at.scale(-1.0 ,1.0)
                 at.translate(-128.0, 0.0)
             }
-            if (hero.posX +50 < posX){
+            if (hero.posX +50 > posX){
                 at.scale(1.0 ,1.0)
             }
-    }}
+            g.drawImage(image,at, null)}
+    }
 
     fun dying():Boolean{
         if (health <= 0){
+            GameManager.hitmarker.stop();
+            GameManager.hitmarker.reset()
+            GameManager.hitmarker.play()
+            GameManager.killCount ++
             Renderer.xps.add(Experience(this.posX, this.posY,2))
                     return true
         }else{
             return false}
 
     }
+
 
     override fun step() {
         TODO("Not yet implemented")

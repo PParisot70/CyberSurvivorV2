@@ -1,5 +1,5 @@
 package Spell
-
+import SoundPlayer
 import Entity
 import Renderer
 import Renderer.WINDOW_HEIGHT
@@ -84,13 +84,15 @@ class Blaster(posX: Int, posY: Int, size: Int, var damage : Int,var range : Int,
     }
 }
 
-class BlasterSpell(level : Int ) : Spell(40, level, "Blaster") {
+class BlasterSpell(level : Int ) : Spell(40, level, "Blaster" , Sprite.getLogoBlastersprite(level , 0)) {
 
     override fun cast() {
 
         val targets = Renderer.entities
         // Get the closest enemy
-
+        GameManager.blastersound.stop()
+        GameManager.blastersound.reset()
+        GameManager.blastersound.play()
         for (i in 0..level-1){
         var target = targets.minBy { Math.sqrt((it.posX - Renderer.hero.posX).toDouble() * (it.posX - Renderer.hero.posX).toDouble() + (it.posY - Renderer.hero.posY).toDouble() * (it.posY - Renderer.hero.posY).toDouble()) }
         var angle =  (Math.atan2((target.posX - Renderer.hero.posX).toDouble(), (target.posY - Renderer.hero.posY).toDouble()));

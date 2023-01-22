@@ -16,7 +16,7 @@ object EnemyFactory {
         while (verif()) {
             newrdn()
         }
-        return Enemy(x, y ,20,  EnemyType.FAST)
+        return Enemy(x, y ,20, getRandomEnemyType())
     }
 
     fun randomX(): Int {
@@ -75,15 +75,17 @@ object EnemyFactory {
 
 
     fun getRandomEnemyType(): EnemyType {
-        val rand = kotlin.random.Random.nextDouble()
-        val limit = EnemyType.values().sumByDouble { it.probability }
-        val prob = rand * limit
-        var cumProb = 0.0
+        val rand = Math.random()
+        var probabilitySum = 0.0
         for (type in EnemyType.values()) {
-            cumProb += type.probability
-            if (prob < cumProb) return type
+            probabilitySum += type.probability
+            if (rand < probabilitySum) {
+
+                return type
+            }
         }
-        return EnemyType.values().first()
+        return EnemyType.BASIC //normalement ca arrive pas
     }
+
 
 }

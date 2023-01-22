@@ -60,6 +60,9 @@ object Renderer : JPanel() {
 
 
     fun initGame() {
+        GameManager.musique.stop()
+        GameManager.musique.clip.setFramePosition(0)
+        GameManager.musique.play()
         temptile.clear()
         hero.spells.clear()
         hero.bonus.clear()
@@ -74,20 +77,19 @@ object Renderer : JPanel() {
         createEnnemies()
         createExperiences()
         createMap()
-        //hero.spells.add(ThunderAreaSpell(0))
-        hero.spells.add(ThunderNucSpell(1))
+        hero.spells.add(ThunderAreaSpell(0))
+        hero.spells.add(ThunderNucSpell(0))
         hero.spells.add(ShurikenSpell(0))
-        hero.spells.add(BlasterSpell(3))
+        hero.spells.add(BlasterSpell(1))
 
 
-        hero.bonus.add(Powerup(PowerUpType.SHARPDAMAGE , Sprite.getSharpnessSprite(0,0)))
-        hero.bonus.add(Powerup(PowerUpType.EXPLODEDAMAGE , Sprite.getExplosiveSprite(0,0)))
-        hero.bonus.add(Powerup(PowerUpType.BLASTDAMAGE , Sprite.getBlasterSprite(0,0)))
-        hero.bonus.add(Powerup(PowerUpType.HEALTHMAX, Sprite.getviemaxSprite(0,0)))
-        hero.bonus.add(Powerup(PowerUpType.SPEED , Sprite.getSpeedPLUSSprite(0,0)))
-        hero.bonus.add(Powerup(PowerUpType.MULTIEXP, Sprite.getExp_Sprite(0,0)))
-        hero.bonus.add(Powerup(PowerUpType.AIMANT, Sprite.getAimantSprite(0,0)))
-
+        hero.bonus.add(Powerup(PowerUpType.SHARPDAMAGE , Sprite.getSharpnessSprite(0,0), GameManager.shopSharpness))
+        hero.bonus.add(Powerup(PowerUpType.EXPLODEDAMAGE , Sprite.getExplosiveSprite(0,0), GameManager.shopExplosive))
+        hero.bonus.add(Powerup(PowerUpType.BLASTDAMAGE , Sprite.getBlasterSprite(0,0),GameManager.shopBlaster))
+        hero.bonus.add(Powerup(PowerUpType.HEALTHMAX, Sprite.getviemaxSprite(0,0),GameManager.shopVieMax))
+        hero.bonus.add(Powerup(PowerUpType.SPEED , Sprite.getSpeedPLUSSprite(0,0),GameManager.shopSpeedPlus))
+        hero.bonus.add(Powerup(PowerUpType.MULTIEXP, Sprite.getExp_Sprite(0,0),GameManager.shopmultiexp))
+        hero.bonus.add(Powerup(PowerUpType.AIMANT, Sprite.getAimantSprite(0,0),GameManager.shopAiment))
 
 
 
@@ -161,18 +163,18 @@ if (hero.level%5 == 0){
     }
     fun pauseGame() {
         // Mettre en pause le jeu
-        println("${GameManager.state} llalalalalalalalal")
+
 
         if(  GameManager.state == GameState.GAME){
             pauseStartTime = Instant.now()
             GameManager.state = GameState.PAUSE
-            println("!!!!!!!!!!!!!!${GameManager.state}   !!!!!!!!!!!!!!")
+
         }
         else if(  GameManager.state == GameState.PAUSE){
             println("${GameManager.state} 3 ")
             GameManager.state = GameState.GAME
             resume()
-            println("8888888888888888${GameManager.state}888888888888888")
+
         }
 
 
@@ -374,7 +376,13 @@ if (hero.level%5 == 0){
         entities.removeAll {  it.dying() }
         entities.removeAll { hero.isColliding(it) }
         xps.removeAll {hero.isCollidingxp(it)}
-
+        if (hero.health <= 0) {
+            GameManager.gameover.stop()
+            GameManager.gameover.clip.setFramePosition(0)
+            GameManager.gameover.play()
+            GameManager.state = GameState.GAME_OVER
+            hero.health ++
+        }
     }
 
 

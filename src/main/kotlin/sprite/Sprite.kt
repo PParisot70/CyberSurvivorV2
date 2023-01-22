@@ -28,6 +28,11 @@ private var blastsheet :BufferedImage? = null
     private var       Speedplussheet: BufferedImage? = null
     private var       viemaxsheet: BufferedImage? = null
 
+    private var       nucsheet: BufferedImage? = null
+    private var       areasheet: BufferedImage? = null
+    private var       blasterlogosheet: BufferedImage? = null
+    private var       shurikenlogosheet: BufferedImage? = null
+
     const val TILE_SIZE = 128
     fun loadSprite(file: String): BufferedImage? {
         var sprite: BufferedImage? = null
@@ -167,5 +172,33 @@ private var blastsheet :BufferedImage? = null
             fastsheet = loadSprite("FAST")
         }
         return fastsheet!!.getSubimage(xGrid * 50, yGrid *50, 50, 50)
+    }
+
+    fun getLogoNucsprite(xGrid: Int, yGrid: Int): BufferedImage {
+        if (nucsheet == null) {
+            nucsheet = loadSprite("NucleaireLogo")
+        }
+        return nucsheet!!.getSubimage(xGrid * 32, yGrid *32, 32, 32)
+    }
+
+    fun getLogoAreasprite(xGrid: Int, yGrid: Int): BufferedImage {
+        if (areasheet == null) {
+            areasheet = loadSprite("Lightning_logo")
+        }
+        return areasheet!!.getSubimage(xGrid * 32, yGrid *32, 32, 32)
+    }
+
+    fun getLogoBlastersprite(xGrid: Int, yGrid: Int): BufferedImage {
+        if (blasterlogosheet == null) {
+            blasterlogosheet = loadSprite("Blaster_Logo")
+        }
+        return blasterlogosheet!!.getSubimage(xGrid * 32, yGrid *32, 32,32)
+    }
+
+    fun getLogoShurikensprite(xGrid: Int, yGrid: Int): BufferedImage {
+        if (shurikenlogosheet == null) {
+            shurikenlogosheet = loadSprite("Shuriken_Logo")
+        }
+        return shurikenlogosheet!!.getSubimage(xGrid * 32, yGrid *32, 32, 32)
     }
 }

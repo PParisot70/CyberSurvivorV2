@@ -1,6 +1,8 @@
 package Spell
 
-abstract class Spell(var cooldown: Int , var level: Int , var name : String ) {
+import java.awt.Image
+
+abstract class Spell(var cooldown: Int , var level: Int , var name : String  , var image : Image) {
     var currentCooldown = 0
 
     fun step() {

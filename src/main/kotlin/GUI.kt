@@ -24,6 +24,16 @@ object  GUI {
     var buttonshop = MenuButton("Shop", WINDOW_WIDTH/2-150, WINDOW_HEIGHT/15*9, 350, 80)
     var buttonquit = MenuButton("Quittter", WINDOW_WIDTH/2-150, WINDOW_HEIGHT/15*11, 350, 80)
 
+    var buttonretour = MenuButton("Retour",WINDOW_WIDTH/2-100 , WINDOW_HEIGHT/15*1, 200, 80)
+    var buttonmultiexp = MenuButton("Multi EXP", WINDOW_WIDTH/2-250, WINDOW_HEIGHT/15*4, 200, 80)
+    var buttonExplosive = MenuButton("Explosive", WINDOW_WIDTH/2+50, WINDOW_HEIGHT/15*4, 200, 80)
+    var buttonSpeedPlus = MenuButton("Speed", WINDOW_WIDTH/2-250, WINDOW_HEIGHT/15*7, 200, 80)
+    var buttonVieMax = MenuButton("VieMax", WINDOW_WIDTH/2+50, WINDOW_HEIGHT/15*7, 200, 80)
+    var buttonAiment = MenuButton("Aiment", WINDOW_WIDTH/2-250, WINDOW_HEIGHT/15*10, 200, 80)
+    var buttonBlaster = MenuButton("Blaster", WINDOW_WIDTH/2+50, WINDOW_HEIGHT/15*10, 200, 80)
+var buttonSharpness = MenuButton("Sharpness", WINDOW_WIDTH/2-100, WINDOW_HEIGHT/15*12, 200, 80)
+
+
     init {
 
         Renderer.add(buttonup1)
@@ -51,6 +61,8 @@ object  GUI {
         }
 
 
+
+        //BUTTON MENU !!!!!!!!!!!!
         Renderer.add(buttonstart)
         buttonstart.setButtonAction {
             disablemenubutton()
@@ -58,13 +70,58 @@ object  GUI {
             Renderer.initGame()
         }
         Renderer.add(buttonsave)
+        buttonsave.setButtonAction{GameManager.saveVariables()}
         Renderer.add(buttonload)
+        buttonload.setButtonAction{GameManager.loadVariables()}
         Renderer.add(buttonshop)
+        buttonshop.setButtonAction {
+            disablemenubutton()
+            updateshoplabel()
+            GameManager.state=GameState.SHOP
+
+        }
         Renderer.add(buttonquit)
         buttonquit.setButtonAction{
             Renderer.f.defaultCloseOperation
         }
+
+
+
+        //button SHOP
+        Renderer.add(buttonretour)
+        buttonretour.setButtonAction{
+            disableshopbutton()
+            GameManager.state=GameState.MENU
+        }
+        Renderer.add(buttonmultiexp)
+        buttonmultiexp.setButtonAction{ shop(GameManager.shopmultiexp)
+            GameManager.shopmultiexp += 1
+        }
+        Renderer.add(buttonExplosive)
+        buttonExplosive.setButtonAction{ shop(GameManager.shopExplosive)
+            GameManager.shopExplosive+= 1
+        }
+        Renderer.add(buttonSpeedPlus)
+        buttonSpeedPlus.setButtonAction {
+            shop(GameManager.shopSpeedPlus)
+            GameManager.shopSpeedPlus += 1
+        }
+        Renderer.add(buttonVieMax)
+        buttonVieMax.setButtonAction{shop(GameManager.shopVieMax)
+            GameManager.shopVieMax+=1}
+        Renderer.add(buttonAiment)
+        buttonAiment.setButtonAction{shop(GameManager.shopAiment)
+            GameManager.shopAiment+=1}
+        Renderer.add(buttonBlaster)
+        buttonBlaster.setButtonAction { shop(GameManager.shopBlaster)
+            GameManager.shopBlaster+=1}
+        Renderer.add(buttonSharpness)
+        buttonSharpness.setButtonAction { shop(GameManager.shopSharpness)
+            GameManager.shopSharpness+=1}
+
+
         disablemenubutton()
+        updateshoplabel()
     }
     fun draw(g: Graphics2D) {
 
@@ -126,10 +183,9 @@ g.drawOval((WINDOW_WIDTH / 2 -(Renderer.hero.magnetsize)).toInt(), (WINDOW_HEIGH
 
             var i = 0
             Renderer.hero.spells.forEach {
-                g.drawString(
-                    " ${it.level}",
-                    25 - (22 * Renderer.hero.spells.size) + i * 40,
-                    (WINDOW_HEIGHT / 20) * 18
+                g.drawImage(it.image,
+                    25 - (22 * Renderer.hero.spells.size) + i * 40, WINDOW_HEIGHT/15*14 , 50,50,
+                    null
                 )
                 i++
             }
@@ -223,10 +279,16 @@ if (GameManager.state == GameState.SKILL_SELECTION) {
     result[0].setImage(true)
     result[1].setImage(true)
     result[2].setImage(true)
-    g.drawImage(Renderer.result[0].image ,750 , 250, 192, 192,null)
-    g.drawImage(Renderer.result[1].image ,450 , 250, 192,192, null)
-    g.drawImage(Renderer.result[2].image ,150 , 250,192,192, null)
+    if(Renderer.hero.level%5 == 0) {
+        g.drawImage(Renderer.resultspell[0].image, 750, 250, 192, 192, null)
+        g.drawImage(Renderer.resultspell[1].image, 450, 250, 192, 192, null)
+        g.drawImage(Renderer.resultspell[2].image, 150, 250, 192, 192, null)
 
+    }else{
+        g.drawImage(Renderer.result[0].image, 750, 250, 192, 192, null)
+        g.drawImage(Renderer.result[1].image, 450, 250, 192, 192, null)
+        g.drawImage(Renderer.result[2].image, 150, 250, 192, 192, null)
+    }
 }
         if (GameManager.state == GameState.MENU) {
             var alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)
@@ -241,7 +303,39 @@ if (GameManager.state == GameState.SKILL_SELECTION) {
             g.font = font2
             enablemenubutton()
             disableskillbutton()
+            disableshopbutton()
         }
+
+        if (GameManager.state == GameState.SHOP) {
+            var alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)
+            g.setComposite(alpha)
+            g.color = Color.BLACK
+            g.fillRect(0, 0,WINDOW_WIDTH , WINDOW_HEIGHT)
+            alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f)
+            g.setComposite(alpha)
+            g.font = font
+            g.color = Color.WHITE
+            g.drawString("SHOP", 100, WINDOW_HEIGHT/5)
+            g.drawString("KillCount :  ${GameManager.killCount}", WINDOW_WIDTH/2+100, WINDOW_HEIGHT/5)
+            g.font = font2
+            disablemenubutton()
+            disableskillbutton()
+            enableshopbutton()
+        }
+
+        if(GameManager.state == GameState.GAME_OVER){
+            var alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)
+            g.setComposite(alpha)
+            g.color = Color.BLACK
+            g.fillRect(0, 0,WINDOW_WIDTH , WINDOW_HEIGHT)
+            alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f)
+            g.setComposite(alpha)
+            g.font = font
+            g.color = Color.RED
+            g.drawString("GAME OVER", WINDOW_WIDTH/2-100, WINDOW_HEIGHT/2)
+buttonretour.isVisible = true
+            }
+
     }
     fun disablemenubutton(){
                 buttonstart.isVisible = false
@@ -273,5 +367,44 @@ if (GameManager.state == GameState.SKILL_SELECTION) {
         buttonup3.isVisible = true
     }
 
-
+    fun enableshopbutton(){
+       buttonretour.isVisible = true
+        buttonmultiexp.isVisible = true
+        buttonExplosive.isVisible = true
+        buttonSpeedPlus.isVisible = true
+       buttonVieMax.isVisible = true
+        buttonAiment.isVisible = true
+        buttonBlaster.isVisible = true
+        buttonSharpness.isVisible = true
     }
+    fun disableshopbutton(){
+        buttonretour.isVisible = false
+        buttonmultiexp.isVisible = false
+        buttonExplosive.isVisible = false
+        buttonSpeedPlus.isVisible = false
+        buttonVieMax.isVisible = false
+        buttonAiment.isVisible = false
+        buttonBlaster.isVisible = false
+        buttonSharpness.isVisible = false
+        Renderer.f.requestFocus()
+    }
+
+    fun shop(shoplevel : Int){
+
+            if (shoplevel < 5 || GameManager.killCount >= (500* shoplevel)) {
+                GameManager.killCount -= 500 * shoplevel
+                updateshoplabel()
+            }
+        updateshoplabel()
+    }
+    fun updateshoplabel(){
+
+        buttonmultiexp.setText ("Multi EXP  ${(GameManager.shopmultiexp+1)*500}")
+        buttonExplosive.setText ("Explosive  ${(GameManager.shopExplosive+1)*500}")
+        buttonSpeedPlus.setText ("Speed  ${(GameManager.shopSpeedPlus+1)*500}")
+        buttonVieMax.setText ("VieMax  ${(GameManager.shopVieMax+1)*500}")
+        buttonAiment.setText ("Aiment  ${(GameManager.shopAiment+1)*500}")
+        buttonBlaster.setText ("Blaster  ${(GameManager.shopBlaster+1)*500}")
+buttonSharpness.setText("Sharpness  ${(GameManager.shopSharpness+1)*500}")
+
+    }}

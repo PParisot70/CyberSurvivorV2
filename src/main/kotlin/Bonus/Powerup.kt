@@ -5,19 +5,19 @@ import Renderer
 import sprite.Sprite
 import java.awt.Image
 
-class Powerup(val type: PowerUpType , var image : Image) {
-    var level: Int = 0
-        private set
+class Powerup(val type: PowerUpType , var image : Image, var level :Int) {
+
+
     var DamageMulti: Double = 1.0
-        private set
+
     var MultiExp:  Double = 1.0
-        private set
+
     var HealthAdd:  Int = 0
-        private set
+
     var Aimant: Double = 1.0
-        private set
+
     var SpeedMulti:  Double = 1.0
-        private set
+
 
     fun levelUp() {
         if (level < type.maxLevel) {

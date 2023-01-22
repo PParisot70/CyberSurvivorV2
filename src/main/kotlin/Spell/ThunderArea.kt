@@ -5,6 +5,7 @@ import Renderer
 import Renderer.FRAMES_PER_SEC
 import Renderer.WINDOW_HEIGHT
 import Renderer.WINDOW_WIDTH
+import sprite.Sprite
 import java.awt.Color
 import java.awt.Graphics2D
 
@@ -23,6 +24,7 @@ class ThunderArea(posX: Int,posY: Int,size: Int=50, var  level : Int) : Entity(p
         }
 fun updateState(){
     when(level){
+        0->{damage = 0}
         1->print("nothing speciale")
         2->{
                 size = (size*1.25).toInt()
@@ -61,7 +63,7 @@ fun updateState(){
 
 }
 
-class ThunderAreaSpell(level : Int ) : Spell(FRAMES_PER_SEC , level,"ExplodeArena") {
+class ThunderAreaSpell(level : Int ) : Spell(FRAMES_PER_SEC , level,"ExplodeArena", Sprite.getLogoAreasprite(level , 0)) {
     override fun cast() {
 var s = ThunderArea(Renderer.hero.posX, Renderer.hero.posY,150,level)
        Renderer.addDrawable(s)

@@ -5,6 +5,7 @@ import Renderer
 import Renderer.FRAMES_PER_SEC
 import Renderer.WINDOW_HEIGHT
 import Renderer.WINDOW_WIDTH
+import sprite.Sprite
 import java.awt.Color
 import java.awt.Graphics2D
 
@@ -23,6 +24,7 @@ class ThunderNuc(posX: Int,posY: Int,size: Int=50, var  level : Int) : Entity(po
     }
     fun updateState(){
         when(level){
+            0->{damage = 0}
             1->print("nothing speciale")
             2->{
                 damage = (damage*1.25).toInt()
@@ -60,7 +62,7 @@ class ThunderNuc(posX: Int,posY: Int,size: Int=50, var  level : Int) : Entity(po
 
 }
 
-class ThunderNucSpell(level : Int ) : Spell(500 , level , "ThunderNuc") {
+class ThunderNucSpell(level : Int ) : Spell(500 , level , "ThunderNuc", Sprite.getLogoNucsprite(level,0)) {
     override fun cast() {
         var t = ThunderArea(Renderer.hero.posX, Renderer.hero.posY,1000,level)
         Renderer.addDrawable(t)

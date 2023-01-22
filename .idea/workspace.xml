@@ -5,14 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a0481696-cbcd-4e22-a1fd-4ed746073d26" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/Aimant.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/Explosive.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/FAST.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/MultiExp.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/Sharpness.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/SpeedPLus.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/Viemaxx_plus_.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/blaster.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Sound/Blaster.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Sound/Gameover.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Sound/Shuriken.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Sound/TURBO TAWA.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Sound/buttonhover.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Sound/hitmarker.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Sound/levelup.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/SoundPlayer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/Blaster_Logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/Lightning_logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/NucleaireLogo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/images/Shuriken_Logo.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Bonus/PowerUpType.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Bonus/PowerUpType.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Bonus/Powerup.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Bonus/Powerup.kt" afterDir="false" />
@@ -22,12 +26,13 @@
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/GUI.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/GUI.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/GameManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/GameManager.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Hero.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Hero.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/LevelTimer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/LevelTimer.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/MenuButton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/MenuButton.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Renderer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Renderer.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Spell/Blaster.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/Blaster.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Spell/FireballSpell.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Spell/Spell.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/Spell.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Spell/SpellType.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/SpellType.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Spell/SpikeSpell.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Spell/ThunderArea.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/ThunderArea.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Spell/ThunderNuc.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/ThunderNuc.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Spell/shuriken.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Spell/shuriken.kt" afterDir="false" />
@@ -46,6 +51,8 @@
         <option value="Kotlin File" />
         <option value="Kotlin Object" />
         <option value="Kotlin Class" />
+        <option value="Class" />
+        <option value="package-info" />
       </list>
     </option>
   </component>
@@ -64,35 +71,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/33602/Downloads/Test/CyberSurvivor/src/main/kotlin/images&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/33602/Downloads/Test/CyberSurvivor/src/main/kotlin/Font",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\kotlin\Font" />
       <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\kotlin\images" />
       <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\kotlin\Sound" />
       <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\kotlin\images" />
+      <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\kotlin\Shuriken_logo" />
+      <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\kotlin\Blaster_logo" />
       <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\kotlin\Font" />
-      <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\kotlin" />
-      <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\kotlin\sprite" />
-      <recent name="C:\Users\33602\Downloads\Test\CyberSurvivor\src\main\kotlin\Spell" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="" />
@@ -124,7 +132,10 @@
       <workItem from="1673299825906" duration="12326000" />
       <workItem from="1674030494024" duration="27560000" />
       <workItem from="1674317383254" duration="6678000" />
-      <workItem from="1674332599786" duration="4644000" />
+      <workItem from="1674332599786" duration="6675000" />
+      <workItem from="1674374096585" duration="8004000" />
+      <workItem from="1674382184825" duration="762000" />
+      <workItem from="1674383034030" duration="8888000" />
     </task>
     <task id="LOCAL-00001" summary="Test">
       <created>1669399187343</created>
@@ -161,7 +172,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674047159488</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Bon beaucoup trop de truc rajouté je gere mal mon versionning">
+      <created>1674337312116</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1674337312116</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

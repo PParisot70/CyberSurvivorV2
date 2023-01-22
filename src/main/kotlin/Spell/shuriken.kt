@@ -75,10 +75,12 @@ class Shuriken(posX: Int, posY: Int, size: Int, var damage : Int,var range : Int
     }
 }
 
-class ShurikenSpell(level : Int ) : Spell(40, level, "Shuriken") {
+class ShurikenSpell(level : Int ) : Spell(40, level, "Shuriken" , Sprite.getLogoShurikensprite(level , 0)) {
 
     override fun cast() {
-
+        GameManager.shurikensound.stop()
+        GameManager.shurikensound.reset()
+        GameManager.shurikensound.play()
         for (i in 0..level-1) {
 
             var currentAngle =  ((0..360).random().toDouble())

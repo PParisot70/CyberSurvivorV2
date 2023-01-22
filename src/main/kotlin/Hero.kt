@@ -131,6 +131,9 @@ class Hero( posX: Int, posY: Int , size :Int , initialVelocity: Vector? = Vector
 
 
     fun LevelUp(){
+        GameManager.levelupsound.stop()
+        GameManager.levelupsound.reset()
+        GameManager.levelupsound.play()
         level ++
         expnextLevel += 2 + level * 2
         Renderer.Skillselection()
@@ -146,6 +149,7 @@ class Hero( posX: Int, posY: Int , size :Int , initialVelocity: Vector? = Vector
             else -> "nothing"
         }
     }}
+
 
 }
 

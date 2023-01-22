@@ -8,5 +8,5 @@ enum class PowerUpType(val nom: String, val maxLevel: Int) {
     HEALTHMAX("VieMax", 5, ),
     AIMANT("Aimant", 5 , ),
     SPEED("Speed", 5),
-    MULTIEXP("MultiEXP", 5,)
+    MULTIEXP("MultiEXP", 5)
 }
