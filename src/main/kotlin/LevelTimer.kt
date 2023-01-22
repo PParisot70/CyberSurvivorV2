@@ -12,7 +12,7 @@ fun levelChange( lvl : Int){
         when (niveau) {
             1 -> {GameManager.changeProbabilities(1.0,0.0,0.0)}
             2 -> {
-                nbenemy = 50
+                nbenemy = 15
                 healthmutiply = 1.5
             }
 

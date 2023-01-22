@@ -7,12 +7,7 @@ enum class GameState {
 object GameManager {
     var state = GameState.MENU
 
-    var enemyCooldown = 10
-    var enemySpawnCount = 1
-    var drawables = listOf<Drawable>()
-    var stepCount = 0
-    var killCount = 7000
-    var secondsSurvived = 0
+    var killCount = 0
 
      var shopmultiexp = 0
      var shopExplosive= 0
